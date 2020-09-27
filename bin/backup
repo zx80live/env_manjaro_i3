@@ -1,0 +1,71 @@
+#! /usr/bin/env sh
+
+# environment
+TARGET_DIR=~/temp/backups
+
+# prepare filelist and options
+FILES=()
+LABELS=()
+TAG="untagged"
+
+for e in $@
+do
+	case $e in
+		.)	echo "file '.' does not support, skip" ;;
+		
+		-l:*)   LABELS+=( ${e:3} ) ;;
+
+		-*) if [[ -f $e ]] || [[ -d $e ]]
+			then
+				FILES+=( $e )
+			else
+				TAG=${e:1}
+			fi
+			;;
+			
+		*)	FILES+=( $e ) ;;
+	esac
+done
+
+# create backups
+TIMESTAMP=`date +"%Y%m%d-%H%M%S"`
+echo -e '[ \e[32mstart\e[0m]'
+echo -e '[\e[0;90mtarget\e[0m] '$TARGET_DIR/$TAG
+
+# out labels
+if [ ${#LABELS[@]} -ne 0 ]; then
+  echo -e '[\e[0;90mlabels\e[0m]\t\e[35m'${LABELS[*]}'\e[0m'
+  echo ${LABELS[*]} > ./backup_labels_$TIMESTAMP
+fi
+
+for name in ${FILES[@]}
+do
+        if [ ${#LABELS[@]} -ne 0 ]; then
+          IFS='-';labelsStr="-${LABELS[*]}";IFS=$' \t\n'
+        else 
+          labelsStr=""
+        fi
+        
+	targetName=$name"_"${TIMESTAMP}$labelsStr.tar.gz
+        targetPath=$TARGET_DIR/$TAG/$name
+	info='\e[0;90m./\e[1;34m'$name'\e[0m\e[0;90m'/$targetName'\e[0m'
+
+	echo -e '[\e[94mcreate\e[0m]\t'$info
+	
+	mkdir -p $targetPath
+	
+	if [ ${#LABELS[@]} -ne 0 ]; then
+	  tar -zcf $targetPath/$targetName ./$name ./backup_labels_$TIMESTAMP
+	else
+	  tar -zcf $targetPath/$targetName ./$name
+	fi  
+
+	echo -e '\033[1A[  \e[0;90mOK\e[0m  ]\t'$info
+done
+
+if [ ${#LABELS[@]} -ne 0 ]; then
+  rm ./backup_labels_$TIMESTAMP
+fi
+
+
+echo -e '[ \e[32mdone \e[0m]'

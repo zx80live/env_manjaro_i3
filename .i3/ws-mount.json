@@ -1,0 +1,112 @@
+// vim:ts=4:sw=4:et
+{
+    "layout" : "splitv",
+    "percent" : 0.5,
+    "type" : "con",
+    "nodes" : [
+
+
+    {
+        // splith split container with 2 children
+        "border": "pixel",
+        "floating": "auto_off",
+        "layout": "splith",
+        "percent": 0.5,
+        "type": "con",
+        "nodes": [
+            {
+                "border": "pixel",
+                "current_border_width": 1,
+                "floating": "auto_off",
+                "geometry": {
+                   "height": 532,
+                   "width": 884,
+                   "x": 0,
+                   "y": 0
+                },
+                "name": "watch_lsblk",
+                "percent": 0.5,
+                "swallows": [
+                   {
+
+                     "class": "^Alacritty$",
+                     "instance": "^Alacritty$",
+                     "title": "^watch_lsblk$"
+                   }
+                ],
+                "type": "con"
+            },
+            {
+                "border": "pixel",
+                "current_border_width": 1,
+                "floating": "auto_off",
+                "geometry": {
+                   "height": 532,
+                   "width": 884,
+                   "x": 0,
+                   "y": 0
+                },
+                "name": "watch_df",
+                "percent": 0.5,
+                "swallows": [
+                   {
+                    "class": "^Alacritty$",
+                    "instance": "^Alacritty$",
+                    "title": "^watch_df$"
+                   }
+                ],
+                "type": "con"
+            }
+        ]
+    },
+
+    
+    {
+        "border": "pixel",
+        "current_border_width": 1,
+        "floating": "auto_off",
+        "geometry": {
+           "height": 532,
+           "width": 884,
+           "x": 0,
+           "y": 0
+        },
+        "name": "mnt",
+        "percent": 0.1,
+        "swallows": [
+           {
+            "class": "^Alacritty$",
+            "instance": "^Alacritty$",
+            "title": "^mnt$"
+           }
+        ],
+        "type": "con"
+    },
+
+    {
+        "border": "pixel",
+        "current_border_width": 1,
+        "floating": "auto_off",
+        "geometry": {
+           "height": 532,
+           "width": 884,
+           "x": 0,
+           "y": 0
+        },
+        "name": "mc",
+        "percent": 0.4,
+        "swallows": [
+           {
+            "class": "^Alacritty$",
+            "instance": "^Alacritty$",
+            "title": "^mc$"
+           }
+        ],
+        "type": "con"
+    }
+
+
+
+    ]
+}
+
