@@ -9,7 +9,7 @@
 `manjaro-i3-20.1-200913-linux58.iso`
 
 ```bash
-$ screenfetchAstrix - The Fourth Revelation
+$ screenfetch
  ██████████████████  ████████     ------
  ██████████████████  ████████     OS: Manjaro 20.1 Mikah
  ██████████████████  ████████     Kernel: x86_64 Linux 5.8.6-1-MANJARO
