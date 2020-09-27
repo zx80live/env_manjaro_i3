@@ -4,7 +4,7 @@
 >
 > TODO push configs
 
-###### Current version
+##### Current version
 
 `manjaro-i3-20.1-200913-linux58.iso`
 
@@ -30,7 +30,7 @@ $ screenfetchAstrix - The Fourth Revelation
 
 
 
-###### Download installation ISO
+##### Download installation ISO
 
 `https://manjaro.org/download/` 🠖  `Editions` 🠖 `Community` 🠖 `i3` 🠖 `Download`  🠖 ( `manjaro-i3-xx.xx-xxxxxx-linuxXX.iso`, `GPG Signature`,  `SHA1`)
 
@@ -40,7 +40,7 @@ $ mv latest.sig manharo-i3-xx.xx-xxxxxx-linuxXX.iso.sig
 
 
 
-###### Verify installation ISO
+##### Verify installation ISO
 
 Docs: https://wiki.manjaro.org/index.php?title=How-to_verify_GPG_key_of_official_.ISO_images
 
@@ -62,7 +62,7 @@ ccac883a02aad952063fc823c919ba6aeb445977              # should be equal SHA1 on 
 
 
 
-###### Write ISO to USB
+##### Write ISO to USB
 
 ```bash
 $ lsblk
@@ -80,7 +80,7 @@ $ sudo dd bs=4M if=~/Downloads/manjaro-i3-20.1-200913-linux58.iso of=/dev/sda st
 
 
 
-###### Initial setup screen
+##### Initial setup screen
 
 Select `tz=UTC`, `keyboard=en`, `drivers=nonfree` in the initial setup screen.
 
@@ -88,7 +88,7 @@ WARN: if you select `tz` or `keyboard` with different values, for example `keybo
 
 
 
-###### Disks structure
+##### Disks structure
 
 > TODO swap with hibernate
 
@@ -114,7 +114,7 @@ nvme1n1     259:5    0 465,8G  0 disk                                    # SSD S
 
 #### System configuration
 
-###### SSD TRIM setup
+##### SSD TRIM setup
 
 ```bash
 $ sudo systemctl status fstrim.timer
@@ -123,7 +123,7 @@ $ sudo systemctl start fstrim.timer
 
 
 
-###### Swap
+##### Swap
 
 ```bash
 $ cat /proc/sys/vm/swappiness
@@ -137,7 +137,7 @@ $ sudo reboot
 
 
 
-###### Synchronize date and time: manual
+##### Synchronize date and time: manual
 
 ```bash
 $ sudo ntpd -qg
@@ -145,31 +145,31 @@ $ sudo ntpd -qg
 
 
 
-###### Synchronize date and time: automatically
+##### Synchronize date and time: automatically
 
 `manjaro-settings-manager` 🠖 `Time and Date` 🠖 turn on `Set time and date automatically` check-box
 
 
 
-###### Firewall
+##### Firewall
 
 `gufw` 🠖 enable `Status` check-box
 
 
 
-###### Switch to the local mirror
+##### Switch to the local mirror
 
 `pamac-manager` 🠖 `Preferences` 🠖 `Official repositories` 🠖 `Use mirrors from:`🠖 select country and then press `Refresh Mirrors List`
 
 
 
-###### Enable AUR
+##### Enable AUR
 
 `pamac-manager` 🠖 `Preferences` 🠖 `AUR` 🠖 turn on `Enable AUR support` check-box and `Check for updates`
 
 
 
-###### Update repositories
+##### Update repositories
 
 ```bash
 $ sudo pacman -Syyu
@@ -177,7 +177,7 @@ $ sudo pacman -Syyu
 
 
 
-###### Base packages
+##### Base packages
 
 ```bash
 $ sudo pacman -S git gvim wget mc
@@ -185,7 +185,7 @@ $ sudo pacman -S git gvim wget mc
 
 
 
-###### Keyboard layout
+##### Keyboard layout
 
 ```bash
 $ setxkbmap -layout us,ru -option 'grp:shifts_toggle'
@@ -199,7 +199,7 @@ exec_always --no-startup-id setxkbmap -layout us,ru -option 'grp:shifts_toggle'
 
 
 
-###### Disable login attempts
+##### Disable login attempts
 
 ```bash
 # unlock locked user: CTRL+ALT+F2 and then 
@@ -211,13 +211,13 @@ deny = 0
 
 
 
-###### GPG
+##### GPG
 
 > TODO config
 
 
 
-###### Boot performance
+##### Boot performance
 
 > TODO configure
 
@@ -227,7 +227,7 @@ https://wiki.archlinux.org/index.php/Improving_performance/Boot_process
 
 #### Drivers
 
-###### NVIDIA
+##### NVIDIA
 
 ```bash
 $ mhwd -l
@@ -238,7 +238,7 @@ $ sudo nvidia-settings
 
 
 
-###### Printers
+##### Printers
 
 Brother DCP -L2560DWR
 
@@ -248,13 +248,13 @@ Brother DCP -L2560DWR
 
 #### Tools: productivity
 
-###### ncdu
+##### ncdu
 
 `sudo pacman -S ncdu`
 
 
 
-###### zsh
+##### zsh
 
 `zsh`, `zsh-autosuggestions`, `zsh-syntax-highlighting` packages are installed and enabled by default in the `.zshrc`
 
@@ -282,7 +282,7 @@ SAVEHIST=10000
 
 
 
-###### zsh plugins
+##### zsh plugins
 
 `pamac-manager` 🠖  `zsh-autosuggestions`, `zsh-syntax-highlighting`
 
@@ -293,7 +293,7 @@ $ echo 'source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.pl
 
 
 
-###### Powerlevel10k
+##### Powerlevel10k
 
 `pamac-manager` 🠖 `AUR: zsh-theme-powerlevel10k`, `ttf-meslo-nerd-font-powerlevel10k`
 
@@ -308,7 +308,7 @@ $ p10k configure
 
 
 
-###### Terminal
+##### Terminal
 
 `pamac-manager` 🠖 `alacritty`
 
@@ -340,7 +340,7 @@ bindsym $mod+Return exec alacritty
 
 
 
-###### Vim
+##### Vim
 
 Dependencies - `git`, `cmake`, `go`, `nodejs`, `npm` , `jdk-openjdk`
 
@@ -380,7 +380,7 @@ ctrl+V  // select text
 
 
 
-###### Desktop notification
+##### Desktop notification
 
 ```bash
 $ notify-send 'Hello, world'
@@ -390,7 +390,7 @@ $ sudo pacman -Syyu && notify-send 'Pacman update has been completed'
 
 
 
-###### Rofi
+##### Rofi
 
 ```bash
 $ sudo pacman -S rofi
@@ -405,7 +405,7 @@ bindsym Mod1+F2 exec rofi -show run -font "MesloLGS NF 16" -show-icons -theme bl
 
 
 
-###### Screenshots
+##### Screenshots
 
 > TODO upload to server
 >
@@ -426,7 +426,7 @@ bindsym $mod+Shift+Print --release exec "scrot -z -se 'mv $f $scrdir && xclip -s
 
 
 
-###### Screen recorders
+##### Screen recorders
 
 > TODO upload to server
 >
@@ -438,7 +438,7 @@ bindsym $mod+Shift+Print --release exec "scrot -z -se 'mv $f $scrdir && xclip -s
 
 
 
-###### Network monitor
+##### Network monitor
 
 `pamac-manager` 🠖 `speedometer`
 
@@ -453,7 +453,7 @@ $ speedometer -r wlp82s0
 
 
 
-###### Time tracking
+##### Time tracking
 
 https://superuser.com/a/611582
 
@@ -461,28 +461,28 @@ https://superuser.com/a/611582
 
 
 
-###### Bookmarks
+##### Bookmarks
 
 > TODO clarify
 >
 
 
 
-###### Knowledge base
+##### Knowledge base
 
 > TODO clarify
 >
 
 
 
-###### Education scheduler
+##### Education scheduler
 
 > TODO clarify
 >
 
 
 
-###### Education learning log
+##### Education learning log
 
 > TODO clarify
 >
@@ -491,13 +491,13 @@ https://superuser.com/a/611582
 
 #### i3 preferences
 
-###### i3 config
+##### i3 config
 
 Location `~/.i3/*`
 
 
 
-###### i3 menu bar
+##### i3 menu bar
 
 ```bash
 $ cp /etc/i3status.conf ~/.i3status.conf
@@ -505,7 +505,7 @@ $ cp /etc/i3status.conf ~/.i3status.conf
 
 
 
-###### i3 save layout
+##### i3 save layout
 
 Dependencies `perl-anyevent-i3`
 
@@ -550,13 +550,13 @@ Define regex in the layout template `$ vim ~/.i3/ws-layout.json`
 
 #### Tools: development
 
-###### Typora
+##### Typora
 
 `typora`- markdown editor
 
 
 
-###### Virtualbox
+##### Virtualbox
 
 https://wiki.manjaro.org/index.php?title=VirtualBox
 
@@ -572,7 +572,7 @@ $ sudo vboxreload
 
 
 
-###### Virtualbox FTP
+##### Virtualbox FTP
 
 ```bash
 # install FTP on guest machine
@@ -595,7 +595,7 @@ $ sudo systemctl restart vsftpd.service
 
 
 
-###### Virtualbox networking
+##### Virtualbox networking
 
 1. Check current state on host machine
 
