@@ -218,9 +218,9 @@ feh --bg-scale ~/temp/img/wallpaper.png
 
 ##### links
 
-https://www.youtube.com/watch?v=C3D_qzw94v8
-https://www.youtube.com/watch?v=jW4GFGOIUjc
-https://www.youtube.com/watch?v=gIqV4Qn2qUE
-https://erikdubois.be/changing-font-type-i3/
-https://platypus-boats.readthedocs.io/en/stable/source/Arch.html
+- https://www.youtube.com/watch?v=C3D_qzw94v8
+- https://www.youtube.com/watch?v=jW4GFGOIUjc
+- https://www.youtube.com/watch?v=gIqV4Qn2qUE
+- https://erikdubois.be/changing-font-type-i3/
+- https://platypus-boats.readthedocs.io/en/stable/source/Arch.html
 
