@@ -1,7 +1,5 @@
 ### Manjaro i3 install
 
-> TODO create github project
->
 > TODO push configs
 
 ##### Current version
