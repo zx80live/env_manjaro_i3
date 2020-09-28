@@ -498,13 +498,13 @@ https://superuser.com/a/611582
 
 #### i3 preferences
 
-##### i3 config
+###### i3 config
 
 Location `~/.i3/*`
 
 
 
-##### i3 menu bar
+###### i3 menu bar
 
 ```bash
 $ cp /etc/i3status.conf ~/.i3status.conf
@@ -512,7 +512,7 @@ $ cp /etc/i3status.conf ~/.i3status.conf
 
 
 
-##### i3 save layout
+###### i3 save layout
 
 Dependencies `perl-anyevent-i3`
 
