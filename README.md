@@ -1,7 +1,5 @@
 ### Manjaro i3 install
 
-> TODO push configs
-
 ##### Current version
 
 `manjaro-i3-20.1-200913-linux58.iso`
@@ -86,9 +84,20 @@ WARN: if you select `tz` or `keyboard` with different values, for example `keybo
 
 
 
+##### Disk analyze
+
+```bash
+# determine GPT or MBR
+$ sudo parted -l
+```
+
+
+
 ##### Disks structure
 
 > TODO swap with hibernate
+
+You can change disk structure from LiveManjaro 🠖 `gparted`
 
 WARN: there is the one attempt of configuring each partition in the partition editor. If you configure a some partition and then configure it again, then two these actions will be applied. Please verify partitions edit summary log before it will be applied.
 
@@ -556,9 +565,11 @@ Define regex in the layout template `$ vim ~/.i3/ws-layout.json`
 
 ##### Virtualbox
 
-https://wiki.manjaro.org/index.php?title=VirtualBox
+###### Virtualbox video driver
 
-https://unix.stackexchange.com/questions/499938/manjaro-guest-on-virtualbox-not-able-to-get-the-full-resolution
+`Settings` 🠖 `Display` 🠖 `Graphics Controller` 🠖 `VboxSVGA`
+
+https://wiki.manjaro.org/index.php?title=VirtualBox
 
 ```bash
 $ mhwd-kernel -li
@@ -636,3 +647,8 @@ $ sudo systemctl restart vsftpd.service
 
    
 
+#### Installed apps
+
+> TODO clarify for arch migration
+
+`networkmanager`, `clipit`, `gparted`
