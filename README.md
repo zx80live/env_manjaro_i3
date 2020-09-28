@@ -581,7 +581,7 @@ $ sudo vboxreload
 
 
 
-##### Virtualbox FTP
+###### Virtualbox FTP
 
 ```bash
 # install FTP on guest machine
@@ -604,7 +604,7 @@ $ sudo systemctl restart vsftpd.service
 
 
 
-##### Virtualbox networking
+###### Virtualbox networking
 
 1. Check current state on host machine
 
