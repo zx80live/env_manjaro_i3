@@ -224,3 +224,40 @@ feh --bg-scale ~/temp/img/wallpaper.png
 - https://erikdubois.be/changing-font-type-i3/
 - https://platypus-boats.readthedocs.io/en/stable/source/Arch.html
 
+##### mhwd -h
+```bash
+$ mhwd -l
+> 0000:01:00.0 (0300:10de:1fb9) Display controller nVidia Corporation:
+--------------------------------------------------------------------------------
+                  NAME               VERSION          FREEDRIVER           TYPE
+--------------------------------------------------------------------------------
+video-hybrid-intel-nvidia-450xx-prime            2019.10.25               false            PCI
+video-hybrid-intel-nvidia-440xx-prime            2019.10.25               false            PCI
+video-hybrid-intel-nvidia-435xx-prime            2019.10.25               false            PCI
+video-hybrid-intel-nvidia-430xx-bumblebee            2019.10.25               false            PCI
+video-hybrid-intel-nvidia-418xx-bumblebee            2019.10.25               false            PCI
+    video-nvidia-450xx            2019.10.25               false            PCI
+    video-nvidia-440xx            2019.10.25               false            PCI
+    video-nvidia-435xx            2019.10.25               false            PCI
+    video-nvidia-430xx            2019.10.25               false            PCI
+    video-nvidia-418xx            2019.10.25               false            PCI
+           video-linux            2018.05.04                true            PCI
+     video-modesetting            2020.01.13                true            PCI
+            video-vesa            2017.03.12                true            PCI
+
+
+> 0000:00:02.0 (0300:8086:3e9b) Display controller Intel Corporation:
+--------------------------------------------------------------------------------
+                  NAME               VERSION          FREEDRIVER           TYPE
+--------------------------------------------------------------------------------
+video-hybrid-intel-nvidia-450xx-prime            2019.10.25               false            PCI
+video-hybrid-intel-nvidia-440xx-prime            2019.10.25               false            PCI
+video-hybrid-intel-nvidia-435xx-prime            2019.10.25               false            PCI
+video-hybrid-intel-nvidia-430xx-bumblebee            2019.10.25               false            PCI
+video-hybrid-intel-nvidia-418xx-bumblebee            2019.10.25               false            PCI
+           video-linux            2018.05.04                true            PCI
+     video-modesetting            2020.01.13                true            PCI
+            video-vesa            2017.03.12                true            PCI
+
+```
+
