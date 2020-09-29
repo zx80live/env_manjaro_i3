@@ -223,6 +223,7 @@ feh --bg-scale ~/temp/img/wallpaper.png
 - https://www.youtube.com/watch?v=gIqV4Qn2qUE
 - https://erikdubois.be/changing-font-type-i3/
 - https://platypus-boats.readthedocs.io/en/stable/source/Arch.html
+- https://vk.com/@like_913-nastroika-gibridnoi-grafiki-nvidiaintel-na-archlinux
 
 ##### mhwd -h
 ```bash
