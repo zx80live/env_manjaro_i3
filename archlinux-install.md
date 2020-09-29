@@ -261,3 +261,95 @@ video-hybrid-intel-nvidia-418xx-bumblebee            2019.10.25               fa
 
 ```
 
+```
+> Using config 'video-hybrid-intel-nvidia-450xx-prime' for device: 0000:01:00.0 (0300:10de:1fb9) Display controller nVidia Corporation TU117GLM [Quadro T1000 Mobile]
+> Using config 'video-hybrid-intel-nvidia-450xx-prime' for device: 0000:00:02.0 (0300:8086:3e9b) Display controller Intel Corporation UHD Graphics 630 (Mobile)
+> Installing video-hybrid-intel-nvidia-450xx-prime...
+Sourcing /etc/mhwd-x86_64.conf
+Has lib32 support: true
+Sourcing /var/lib/mhwd/db/pci/graphic_drivers/hybrid-intel-nvidia-450xx-prime/MHWDCONFIG
+Processing classid: 0300
+Sourcing /var/lib/mhwd/scripts/include/0300
+:: Synchronizing package databases...
+ core is up to date
+ extra is up to date
+ community is up to date
+ multilib is up to date
+resolving dependencies...
+looking for conflicting packages...
+
+Packages (4) lib32-nvidia-450xx-utils-450.66-1  linux58-nvidia-450xx-450.66-9  nvidia-450xx-utils-450.66-1  nvidia-prime-1.0-4
+
+Total Download Size:   131,60 MiB
+Total Installed Size:  367,82 MiB
+
+:: Proceed with installation? [Y/n] 
+:: Retrieving packages...
+downloading nvidia-450xx-utils-450.66-1-x86_64.pkg.tar.zst...
+downloading nvidia-prime-1.0-4-any.pkg.tar.zst...
+downloading linux58-nvidia-450xx-450.66-9-x86_64.pkg.tar.xz...
+downloading lib32-nvidia-450xx-utils-450.66-1-x86_64.pkg.tar.zst...
+checking keyring...
+checking package integrity...
+loading package files...
+checking for file conflicts...
+checking available disk space...
+:: Processing package changes...
+installing nvidia-450xx-utils...
+==> If you run into trouble with CUDA not being available, run nvidia-modprobe first.
+Optional dependencies for nvidia-450xx-utils
+    gtk3: nvidia-settings [installed]
+    xorg-server-devel: nvidia-xconfig
+    opencl-nvidia: OpenCL support
+installing nvidia-prime...
+installing lib32-nvidia-450xx-utils...
+Optional dependencies for lib32-nvidia-450xx-utils
+    lib32-opencl-nvidia-450xx
+installing linux58-nvidia-450xx...
+In order to use nvidia module, reboot the system.
+:: Running post-transaction hooks...
+(1/6) Creating system user accounts...
+Creating group nvidia-persistenced with gid 143.
+Creating user nvidia-persistenced (NVIDIA Persistence Daemon) with uid 143 and gid 143.
+(2/6) Reloading system manager configuration...
+(3/6) Arming ConditionNeedsUpdate...
+(4/6) Updating module dependencies...
+(5/6) Updating Kernel initcpios for Nvidia-DRM...
+==> Building image from preset: /etc/mkinitcpio.d/linux58.preset: 'default'
+  -> -k /boot/vmlinuz-5.8-x86_64 -c /etc/mkinitcpio.conf -g /boot/initramfs-5.8-x86_64.img
+==> Starting build: 5.8.6-1-MANJARO
+  -> Running build hook: [base]
+  -> Running build hook: [udev]
+  -> Running build hook: [autodetect]
+  -> Running build hook: [modconf]
+  -> Running build hook: [block]
+==> WARNING: Possibly missing firmware for module: xhci_pci
+  -> Running build hook: [keyboard]
+  -> Running build hook: [keymap]
+  -> Running build hook: [filesystems]
+==> Generating module dependencies
+==> Creating gzip-compressed initcpio image: /boot/initramfs-5.8-x86_64.img
+==> Image generation successful
+==> Building image from preset: /etc/mkinitcpio.d/linux58.preset: 'fallback'
+  -> -k /boot/vmlinuz-5.8-x86_64 -c /etc/mkinitcpio.conf -g /boot/initramfs-5.8-x86_64-fallback.img -S autodetect
+==> Starting build: 5.8.6-1-MANJARO
+  -> Running build hook: [base]
+  -> Running build hook: [udev]
+  -> Running build hook: [modconf]
+  -> Running build hook: [block]
+==> WARNING: Possibly missing firmware for module: xhci_pci
+  -> Running build hook: [keyboard]
+  -> Running build hook: [keymap]
+  -> Running build hook: [filesystems]
+==> Generating module dependencies
+==> Creating gzip-compressed initcpio image: /boot/initramfs-5.8-x86_64-fallback.img
+==> Image generation successful
+(6/6) Updating the desktop file MIME type cache...
+nvidia-450xx-utils: install reason has been set to 'explicitly installed'
+nvidia-prime: install reason has been set to 'explicitly installed'
+lib32-nvidia-450xx-utils: install reason has been set to 'explicitly installed'
+linux58-nvidia-450xx: install reason has been set to 'explicitly installed'
+xorg configuration file: '/etc/X11/mhwd.d/nvidia.conf'
+> Successfully installed video-hybrid-intel-nvidia-450xx-prime
+
+```
