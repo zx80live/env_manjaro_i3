@@ -443,8 +443,6 @@ bindsym $mod+Return exec alacritty
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# start program launcher
-bindsym $mod+d exec --no-startup-id dmenu_recency
 
 # launch categorized menu
 bindsym $mod+z exec --no-startup-id morc_menu
@@ -478,10 +476,14 @@ bindsym $mod+Shift+h exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
 # application runner
-#bindsym Mod1+Tab exec rofi -show window -font "DejaVu Sans 16" -show-icons -theme sidebar
-bindsym Mod1+Tab exec rofi -show window -font "MesloLGS NF 16" -show-icons -theme sidebar
+#bindsym $mod+d exec --no-startup-id dmenu_recency
+bindsym $mod+d exec --no-startup-id exec rofi -show run -font "MesloLGS NF 16" -show-icons -theme blue
 #bindsym Mod1+F2 exec rofi -show run -font "DejaVu Sans 16" -show-icons -theme blue
 bindsym Mod1+F2 exec rofi -show run -font "MesloLGS NF 16" -show-icons -theme blue
+
+# show running apps (Alt+Tab)
+#bindsym Mod1+Tab exec rofi -show window -font "DejaVu Sans 16" -show-icons -theme sidebar
+bindsym Mod1+Tab exec rofi -show window -font "MesloLGS NF 16" -show-icons -theme sidebar
 
 
 #-- [Keys.user] ---------------------------------------------------------------------------
