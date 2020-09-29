@@ -477,9 +477,9 @@ bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
 # application runner
 #bindsym $mod+d exec --no-startup-id dmenu_recency
-bindsym $mod+d exec --no-startup-id exec rofi -show run -font "MesloLGS NF 16" -show-icons -theme blue
-#bindsym Mod1+F2 exec rofi -show run -font "DejaVu Sans 16" -show-icons -theme blue
-bindsym Mod1+F2 exec rofi -show run -font "MesloLGS NF 16" -show-icons -theme blue
+bindsym $mod+d exec --no-startup-id exec rofi -show run -font "MesloLGS NF 16" -show-icons -theme solarized 
+#bindsym Mod1+F2 exec rofi -show run -font "DejaVu Sans 16" -show-icons -theme solarized
+bindsym Mod1+F2 exec rofi -show run -font "MesloLGS NF 16" -show-icons -theme solarized 
 
 # show running apps (Alt+Tab)
 #bindsym Mod1+Tab exec rofi -show window -font "DejaVu Sans 16" -show-icons -theme sidebar
