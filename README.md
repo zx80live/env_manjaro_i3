@@ -31,12 +31,15 @@ $ screenfetch
 `https://manjaro.org/download/` 🠖  `Editions` 🠖 `Community` 🠖 `i3` 🠖 `Download`  🠖 ( `manjaro-i3-xx.xx-xxxxxx-linuxXX.iso`, `GPG Signature`,  `SHA1`)
 
 ```bash
-$ mv latest.sig manharo-i3-xx.xx-xxxxxx-linuxXX.iso.sig
+$ mv latest.sig manjaro-i3-xx.xx-xxxxxx-linuxXX.iso.sig
 ```
 
 
 
 ##### Verify installation ISO
+```bash
+$ pacman-key -v manjaro-i3-20.1-200913-linux58.iso.sig
+```
 
 Docs: https://wiki.manjaro.org/index.php?title=How-to_verify_GPG_key_of_official_.ISO_images
 
