@@ -270,6 +270,8 @@ Brother DCP -L2560DWR
 
 ##### zsh
 
+> TODO autosuggestion /h/w/ -> tab does not work
+
 `zsh`, `zsh-autosuggestions`, `zsh-syntax-highlighting` packages are installed and enabled by default in the `.zshrc`
 
 ```bash
