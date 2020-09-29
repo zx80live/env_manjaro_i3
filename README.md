@@ -1,5 +1,9 @@
 ### Manjaro i3 install
 
+> TODO optimize GRUB - remove unused entries
+
+
+
 ##### Current version
 
 `manjaro-i3-20.1-200913-linux58.iso`
@@ -112,12 +116,12 @@ nvme0n1     259:0    0 238,5G  0 disk                                    # SSD I
 ├─nvme0n1p2 259:2    0    16M  0 part              - 
 ├─nvme0n1p3 259:3    0 237,2G  0 part /mnt/win     -                     
 └─nvme0n1p4 259:4    0  1000M  0 part              -
-nvme1n1     259:5    0 465,8G  0 disk                                    # SSD Samsung 500 Gb
-├─nvme1n1p1 259:6    0   512M  0 part /boot/efi   [F]  [boot]            # grub
-├─nvme1n1p2 259:7    0     2G  0 part [SWAP]      [F]     
-├─nvme1n1p3 259:8    0   100G  0 part /           [F]   
-└─nvme1n1p4 259:9    0 363,3G  0 part /home        - 
 
+nvme1n1     259:5    0 465.8G  0 disk                                    # SSD Samsung 500 Gb
+├─nvme1n1p1 259:6    0   550M  0 part /boot/efi   [F]  [boot]            # grub
+├─nvme1n1p2 259:7    0   100G  0 part /           [F]
+├─nvme1n1p3 259:8    0 363.2G  0 part /home        -
+└─nvme1n1p4 259:9    0     2G  0 part [SWAP]      [F]
 ```
 
 
@@ -648,10 +652,6 @@ $ sudo systemctl restart vsftpd.service
    $ ftp -p 192.168.1.48
    ```
 
-   
 
-#### Installed apps
 
-> TODO clarify for arch migration
 
-`networkmanager`, `clipit`, `gparted`
