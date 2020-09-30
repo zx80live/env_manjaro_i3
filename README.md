@@ -521,6 +521,12 @@ $ cp /etc/i3status.conf ~/.i3status.conf
 
 
 
+###### i3 rename window title
+
+Dependencies `xdotool`, `wmctrl`
+
+
+
 ###### i3 save layout
 
 Dependencies `perl-anyevent-i3`

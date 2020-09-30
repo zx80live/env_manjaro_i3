@@ -434,6 +434,8 @@ bindsym $mod+Ctrl+z+Up resize grow height 10 px or 10 ppt
 bindsym $mod+Ctrl+z+Down resize shrink height 10 px or 10 ppt
 bindsym $mod+Ctrl+z+Left resize grow width 10 px or 10 ppt
 
+# rename window title
+bindsym Ctrl+Mod1+t exec ~/bin/rename_window_title
 
 #-- [Keys.system.apps] -------------------------------------------------------------------------
 
