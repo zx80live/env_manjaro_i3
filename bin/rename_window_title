@@ -1,4 +1,4 @@
 #! /bin/bash
 
-new_title=$(echo "" | rofi -dmenu -p "Enter Text > "); echo "${new_title}"
+new_title=$(echo "" | rofi -dmenu -p "Window title" -theme solarized); echo "${new_title}"
 ~/bin/set_window_title $new_title
