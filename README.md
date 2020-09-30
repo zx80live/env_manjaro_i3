@@ -1,7 +1,9 @@
 ### Manjaro i3 install
 
 > TODO optimize GRUB - remove unused entries
+
 > TODO rename tile on the fly
+
 > TODO i3 breeze dark theme
 
 
