@@ -10,6 +10,9 @@ set $mod Mod4
 
 #-- [appearance] -------------------------------------------------------------------------------
 
+# window title
+title_align center
+
 # set default desktop layout (default is tiling)
 # workspace_layout tabbed <stacking|tabbed>
 
