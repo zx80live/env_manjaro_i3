@@ -248,7 +248,8 @@ for_window [class="Xfburn"] floating enable
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
 
-
+for_window [class="Chromium"] title_format "<span foreground='#4A9CBF'>🌍 %title </span>"
+for_window [class="Alacritty"] title_format "<span> <b>›</b> %title</span>"
 
 
 #-- [Keys.system] ------------------------------------------------------------------------------
