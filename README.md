@@ -2,8 +2,6 @@
 
 > TODO optimize GRUB - remove unused entries
 
-> TODO i3 breeze dark theme
-
 
 ##### Current version
 
