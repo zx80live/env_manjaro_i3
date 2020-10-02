@@ -683,3 +683,16 @@ $ rsync -rvn /mnt/usb-a/ /mnt/usb-b/
 # extract files
 $ cpio -ivd -H tar < archive.tar
 ```
+
+
+
+#### How-to
+
+###### Extract from TAR: Invalid or incomplete multibyte or wide character
+
+`pamac-manager` 🠖 `unarchiver`
+
+```bash
+$ unar archive.tar
+```
+
