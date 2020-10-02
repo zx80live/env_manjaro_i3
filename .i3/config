@@ -249,13 +249,13 @@ for_window [class="Xfburn"] floating enable
 for_window [urgent=latest] focus
 
 # app icons (https://www.nerdfonts.com/cheat-sheet)
-for_window [class="Chromium"] title_format "<span color='#207498'> </span> %title"
-for_window [class="Alacritty"] title_format "<span color='#929292'>﬑</span> %title"
-for_window [class="Typora"] title_format "<span> %title</span>"
-for_window [class="Pidgin"] title_format "<span> %title</span>"
-for_window [class="VirtualBox Manager"] title_format "<span color='#38B5CF'> </span> %title"
-for_window [class="libreoffice"] title_format "<span color='#5F875F'> </span> %title"
-for_window [class="jetbrains-idea-ce"] title_format "<span color='#5F4A4E'> </span> %title"
+for_window [class="Chromium"] title_format "<span color='#0090D4'>  </span> %title"
+for_window [class="Alacritty"] title_format "<span color='#929292'> ﬑</span> %title"
+for_window [class="Typora"] title_format "<span color='#5E9E5E'> </span>  %title"
+for_window [class="Pidgin"] title_format "<span color='#CCC8B6'> </span>  %title"
+for_window [class="VirtualBox Manager"] title_format "<span color='#38B5CF'>  </span> %title"
+for_window [class="libreoffice"] title_format "<span color='#5E9E5E'>  </span> %title"
+for_window [class="jetbrains-idea-ce"] title_format "<span color='#AF5F5F'>  </span> %title"
 
 
 #-- [Keys.system] ------------------------------------------------------------------------------
