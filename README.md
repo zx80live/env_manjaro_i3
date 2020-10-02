@@ -667,4 +667,9 @@ $ sudo systemctl restart vsftpd.service
 
 
 
+##### Useful commands
+
+`lsblk`, `df -h` (`watch lsblk`, `watch df -h`)
+
+`diff -qr /mnt/usb-a /mnt/usb-b`
 
