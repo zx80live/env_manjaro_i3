@@ -684,6 +684,11 @@ $ rsync -rvn /mnt/usb-a/ /mnt/usb-b/
 $ cpio -ivd -H tar < archive.tar
 ```
 
+```bash
+# sync two dirs
+$ rsync -r /dir1/ /dir2/
+```
+
 
 
 #### How-to
