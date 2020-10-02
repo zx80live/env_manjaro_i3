@@ -227,7 +227,7 @@ colors:
     red:     '#cc6666'
     green:   '#b5bd68'
     yellow:  '#f0c674'
-    blue:    '#3465A4' #'#81a2be'
+    blue:    '#1B537D' #'#81a2be'
     magenta: '#b294bb'
     cyan:    '#06989A' #'#8abeb7'
     white:   '#c5c8c6'
