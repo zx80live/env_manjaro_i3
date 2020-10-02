@@ -677,3 +677,4 @@ $ diff -qr /mnt/usb-a /mnt/usb-b
 $ rsync -rvn /mnt/usb-a/ /mnt/usb-b/
 ```
 
+`xprop`
