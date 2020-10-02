@@ -1,0 +1,3 @@
+#! /usr/bin/env sh
+
+( speaker-test -t sine -f 10000 )& pid=$! ; sleep 0.08s ; kill -9 $pid
