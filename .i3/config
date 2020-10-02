@@ -254,6 +254,7 @@ for_window [class="Alacritty"] title_format "<span>﬑ %title</span>"
 for_window [class="Typora"] title_format "<span> %title</span>"
 for_window [class="Pidgin"] title_format "<span> %title</span>"
 for_window [class="VirtualBox Manager"] title_format "<span> %title</span>"
+for_window [class="libreoffice"] title_format "<span> %title</span>"
 
 
 #-- [Keys.system] ------------------------------------------------------------------------------

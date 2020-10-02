@@ -671,5 +671,9 @@ $ sudo systemctl restart vsftpd.service
 
 `lsblk`, `df -h` (`watch lsblk`, `watch df -h`)
 
-`diff -qr /mnt/usb-a /mnt/usb-b`
+```bash
+# compare dirs
+$ diff -qr /mnt/usb-a /mnt/usb-b
+$ rsync -rvn /mnt/usb-a/ /mnt/usb-b/
+```
 
