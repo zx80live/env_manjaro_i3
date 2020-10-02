@@ -678,3 +678,8 @@ $ rsync -rvn /mnt/usb-a/ /mnt/usb-b/
 ```
 
 `xprop`
+
+```
+# extract files
+$ cpio -ivd -H tar < archive.tar
+```
