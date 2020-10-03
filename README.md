@@ -703,6 +703,27 @@ $ rsync -r /dir1/ /dir2/
 $ android-file-transfer
 ```
 
+###### Create and check TAR.GZ control sum
+
+```bash
+# create control sum
+$ sha256sum archive.tar.gz > archive.tar.gz.sha256
+
+$ check control sum
+$ sha256sum -c archive.tar.gz.sha256
+```
+
+
+###### Check TAR.GZ integrity
+
+```bash
+# check gzip integrity
+$ gunzip -t archive.tar.gz
+
+# check tar inside gzip integrity
+$ gunzip -c archive.tar.gz | tar t > /dev/null
+```
+
 ###### Extract from TAR: Invalid or incomplete multibyte or wide character
 
 `pamac-manager` 🠖 `unarchiver`
