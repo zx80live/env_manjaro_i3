@@ -693,7 +693,18 @@ $ rsync -r /dir1/ /dir2/
 
 #### How-to
 
+###### Sync local folders
+
+```bash
+# run twice
+$ rsync -r -t -v --progress -s /dir1/ /dir2/
+$ rsync -r -t -v --progress -s /dir2/ /dir1/
+```
+
+
+
 ###### Connect to USB Android phone
+
 `pamac-manager` 🠖 `android-file-transfer`
 
 ```bash
