@@ -693,6 +693,16 @@ $ rsync -r /dir1/ /dir2/
 
 #### How-to
 
+###### Connect to USB Android phone
+`pamac-manager` 🠖 `android-file-transfer`
+
+```bash
+# 1. Connect phone to USB
+# 2. Allow transfering data in the phone
+# 3. Enter command:
+$ android-file-transfer
+```
+
 ###### Extract from TAR: Invalid or incomplete multibyte or wide character
 
 `pamac-manager` 🠖 `unarchiver`
