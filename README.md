@@ -2,6 +2,8 @@
 
 > TODO optimize GRUB - remove unused entries
 
+> TODO connect to USB android
+
 
 ##### Current version
 
