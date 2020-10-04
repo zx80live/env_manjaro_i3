@@ -4,6 +4,8 @@
 
 > TODO console audio player
 
+> TODO bindsym - rsync current dirs in mc
+
 
 ##### Current version
 
