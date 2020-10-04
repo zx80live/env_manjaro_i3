@@ -2,6 +2,8 @@
 
 > TODO optimize GRUB - remove unused entries
 
+> TODO console audio player
+
 
 ##### Current version
 
@@ -735,7 +737,8 @@ $ gunzip -t archive.tar.gz
 $ gunzip -c archive.tar.gz | tar t > /dev/null
 ```
 
-###### Extract from TAR: Invalid or incomplete multibyte or wide character
+###### Extract from any archive
+Including extracting from TAR: Invalid or incomplete multibyte or wide character
 
 `pamac-manager` 🠖 `unarchiver`
 
