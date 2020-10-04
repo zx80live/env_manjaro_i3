@@ -4,7 +4,7 @@
 
 > TODO console audio player
 
-> TODO bindsym - rsync current dirs in mc
+> TODO bindsym - rsync current dirs in mc (left > right | left < right | both)
 
 
 ##### Current version
