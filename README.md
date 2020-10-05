@@ -6,6 +6,10 @@
 
 > TODO bindsym - rsync current dirs in mc (left > right | left < right | both)
 
+> TODO highlight console command result (for example `ls -l`)
+
+> TODO fast zsh navigation (for example `/h/w` <tab> should substitute full path `/home/work`
+
 
 ##### Current version
 
