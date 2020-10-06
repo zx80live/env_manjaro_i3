@@ -2,6 +2,14 @@
 
 > TODO optimize GRUB - remove unused entries
 
+> TODO console audio player
+
+> TODO bindsym - rsync current dirs in mc (left > right | left < right | both)
+
+> TODO highlight console command result (for example `ls -l`)
+
+> TODO fast zsh navigation (for example `/h/w` <tab> should substitute full path `/home/work`
+
 
 ##### Current version
 
@@ -735,7 +743,8 @@ $ gunzip -t archive.tar.gz
 $ gunzip -c archive.tar.gz | tar t > /dev/null
 ```
 
-###### Extract from TAR: Invalid or incomplete multibyte or wide character
+###### Extract from any archive
+Including extracting from TAR: Invalid or incomplete multibyte or wide character
 
 `pamac-manager` 🠖 `unarchiver`
 
