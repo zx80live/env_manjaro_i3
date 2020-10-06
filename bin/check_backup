@@ -1,0 +1,8 @@
+#! /usr/bin/env sh
+
+filename=$1
+echo check integrity [$filename]
+echo -e '\e[0;90m  > checking gzip integrity...\e[0m'
+gunzip -t $filename
+echo -e '\e[0;90m  > checking tar integrity inside gzip...\e[0m'
+gunzip -c $filename | tar t > /dev/null

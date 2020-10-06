@@ -452,6 +452,7 @@ bindsym Ctrl+Mod1+t exec ~/bin/rename_window_title
 
 # start a terminal
 bindsym $mod+Return exec alacritty
+bindsym $mod+Shift+Return exec alacritty -e ranger
 
 # kill focused window
 bindsym $mod+Shift+q kill
