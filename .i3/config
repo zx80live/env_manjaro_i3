@@ -171,9 +171,8 @@ mode "$mode_gaps_outer" {
 
 
 #-- [Autostart] --------------------------------------------------------------------------------
-
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id nitrogen --restore; sleep 1; picom -b
+exec --no-startup-id nitrogen --restore; #sleep 1; picom -b
 #exec --no-startup-id manjaro-hello
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
@@ -406,9 +405,6 @@ bindsym $mod+minus scratchpad show
 #navigate workspaces next / previous
 # bindsym $mod+Ctrl+Right workspace next
 # bindsym $mod+Ctrl+Left workspace prev
-
-# Lock screen
-#bindsym $Ctrl+Alt+9 exec --no-startup-id blurlock
 
 # Resize window (you can also use the mouse for that)
 bindsym $mod+r mode "resize"
