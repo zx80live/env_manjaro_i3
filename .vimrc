@@ -51,6 +51,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'lilydjwg/colorizer'
+Plug 'plasticboy/vim-markdown'
 
 call plug#end()
 
