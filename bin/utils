@@ -24,10 +24,29 @@ function is_valid_range(){
 }
 
 function is_valid_abs_range(){
-  if is_pos $1 && is_pos $2 && is_valid_range $1 $e; then
+  if is_pos $1 && is_pos $2 && is_valid_range $1 $2; then
     return 0;
   else
     return 1;
   fi
 }
 
+function substring(){
+  local str=$1
+  local from=$2
+  local to=$3
+  local length=$(strlen $str)
+
+  if ! is_valid_abs_range $from $to ; then
+    echo "false"
+    return;
+  fi
+
+  if (($from > $length)) || (($to > $length)); then
+    echo "range [$from, $to] is out of bound string [len=$length]"
+    return;
+  fi
+
+  local result=${str:$from:$(($to))}
+  echo "$result"
+}
