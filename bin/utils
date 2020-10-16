@@ -50,3 +50,40 @@ function substring(){
   local result=${str:$from:$(($to))}
   echo "$result"
 }
+
+function drop_right(){
+  local str=$1
+  local n=$2
+  local length=$(strlen $str)
+
+  if (($n > $length)) || (($n < 0)); then
+    echo "[n=$n] out of range string [length=$length]"
+    return;
+  fi
+
+  local from=0
+  local to=$length-$n
+
+  local result=$(substring $str $from $to)
+  
+  echo $result
+}
+
+function drop_left(){
+  local str=$1
+  local n=$2
+  local length=$(strlen $str)
+
+  if (($n > $length)) || (($n < 0)); then
+    echo "[n=$n] out of range string [length=$length]"
+    return;
+  fi
+
+  local from=$n
+  local to=$length
+
+  local result=$(substring $str $from $to)
+  
+  echo $result
+}
+
