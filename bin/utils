@@ -1,0 +1,9 @@
+#!/usr/bin/bash -
+
+function touch_dir(){
+  local dir=$1
+  if [ ! -d "$dir" ]; then
+    mkdir -p $dir
+    echo "[$dir] has been created"
+  fi
+}
