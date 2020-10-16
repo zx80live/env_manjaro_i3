@@ -7,3 +7,27 @@ function touch_dir(){
     echo "[$dir] has been created"
   fi
 }
+
+function strlen(){
+  local str=$1
+  echo ${#str}
+}
+
+function is_pos(){
+  local result=$(($1 < 0))
+  return $result;
+}
+
+function is_valid_range(){
+  local result=$(($1 > $2))
+  return $result;
+}
+
+function is_valid_abs_range(){
+  if is_pos $1 && is_pos $2 && is_valid_range $1 $e; then
+    return 0;
+  else
+    return 1;
+  fi
+}
+
