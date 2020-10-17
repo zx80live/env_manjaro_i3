@@ -1,11 +1,24 @@
 #!/usr/bin/bash -
 
+function log_info(){
+  local msg=$1
+  echo "[INFO] $msg"
+  return;
+}
+
+function log_err(){
+  local msg=$1
+  echo "[ERROR] $msg"
+  return;
+}
+
 function touch_dir(){
   local dir=$1
   if [ ! -d "$dir" ]; then
     mkdir -p $dir
-    echo "[$dir] has been created"
+    log_info "[$dir] has been created"
   fi
+  return;
 }
 
 function strlen(){
@@ -38,12 +51,12 @@ function substring(){
   local length=$(strlen $str)
 
   if ! is_valid_abs_range $from $to ; then
-    echo "false"
+    log_err "range [$from, $to] is out of bound string [len=$length]"
     return;
   fi
 
   if (($from > $length)) || (($to > $length)); then
-    echo "range [$from, $to] is out of bound string [len=$length]"
+    log_err "range [$from, $to] is out of bound string [len=$length]"
     return;
   fi
 
@@ -57,7 +70,7 @@ function drop_right(){
   local length=$(strlen $str)
 
   if (($n > $length)) || (($n < 0)); then
-    echo "[n=$n] out of range string [length=$length]"
+    log_err "[n=$n] out of range string [length=$length]"
     return;
   fi
 
@@ -75,7 +88,7 @@ function drop_left(){
   local length=$(strlen $str)
 
   if (($n > $length)) || (($n < 0)); then
-    echo "[n=$n] out of range string [length=$length]"
+    log_err "[n=$n] out of range string [length=$length]"
     return;
   fi
 
@@ -93,7 +106,7 @@ function fill_right(){
   local n=$3
 
   if (($n < 0)); then
-    echo "[n=$n] should be >= 0"
+    log_err "[n=$n] should be >= 0"
     return;
   fi
 
@@ -113,7 +126,7 @@ function fill_left(){
   local n=$3
 
   if (($n < 0)); then
-    echo "[n=$n] should be >= 0"
+    log_err "[n=$n] should be >= 0"
     return;
   fi
 
