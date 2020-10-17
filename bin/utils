@@ -87,3 +87,42 @@ function drop_left(){
   echo $result
 }
 
+function fill_right(){
+  local str=$1
+  local chr=$2
+  local n=$3
+
+  if (($n < 0)); then
+    echo "[n=$n] should be >= 0"
+    return;
+  fi
+
+  local i="0"
+  while [ $i -lt $n ]
+  do
+    i=$[$i+1]
+    str="$str$chr"
+  done
+
+  echo $str
+}
+
+function fill_left(){
+  local str=$1
+  local chr=$2
+  local n=$3
+
+  if (($n < 0)); then
+    echo "[n=$n] should be >= 0"
+    return;
+  fi
+
+  local i="0"
+  while [ $i -lt $n ]
+  do
+    i=$[$i+1]
+    str="$chr$str"
+  done
+
+  echo $str
+}
