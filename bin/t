@@ -1,19 +1,72 @@
 #!/usr/bin/bash -
 
-function countdown(){
-   date1=$((`date +%s` + $1));
-   while [ "$date1" -ge `date +%s` ]; do
-     echo -ne "$(date -u --date @$(($date1 - `date +%s`)) +%H:%M:%S)\r";
-     sleep 0.1
-   done
+source timers
+source utils
+
+# args
+counter=$1
+task=$2
+
+# global
+datestamp=current_datestamp
+timestamp=current_timestamp
+simpledate=simple_date
+worklog_dir="/home/temp/doc/worklog" && touch_dir $worklog_dir
+
+
+function touch_task(){
+  # args
+  local name=$1
+  local filename="$worklog_dir/${name}_$datestamp.md"
+
+
+  if [ ! -f "$filename" ]; then
+    local header="### $simpledate"  
+    echo $header >> $filename
+    echo "[$filename] is created"
+  fi
+
+  local subheader="#### $timestamp"
+  echo $subheader >> $filename  
+
+  echo $filename  
 }
-function stopwatch(){
-  date1=`date +%s`;
-   while true; do
-    echo -ne "$(date -u --date @$((`date +%s` - $date1)) +%H:%M:%S)\r";
-    sleep 0.1
-   done
+
+function touch_worklog(){
+  
 }
+
+## entry point
+counter=$1
+task=$2
+starttime=$(current_ms)   
+
+log_dir="/home/temp/doc/worklog"
+log_file="$log_dir/worklog_$datestamp.md" && touch $log_file
+task_file="$log_dir/${task}_$datestamp.md" && touch $task_file
 
 #exec stopwatch && exec echo DONE
 #countdown 10 && echo `date +%s` $* >> ~/timelog.txt
+touch_task $2
+text_start="$timestamp [$task](${task}_$datestamp.md)·······························································"
+text_len=${#text_start}
+max_len=80
+delta=$(($text_len-$max_len))
+from=0
+to=$((${#text_start}-$delta))
+trimmed=${text_start:$from:$(($to))}
+
+echo >> $log_file
+echo -n "$trimmed" >> $log_file
+
+#countdown $counter && b
+
+endtime=$(current_ms) 
+
+timestamp2=`date +%H:%M:%S`
+time_at___=$(((endtime-starttime)/1000))
+text_end__="$timestamp2  ${time_at___}s "
+
+
+echo ${text_end__} >> $log_file
+
