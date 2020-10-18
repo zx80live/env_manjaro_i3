@@ -47,9 +47,13 @@ BG_WHITE=107
 
 function color_code(){
   local msg=$1
-  local code=$2
+  local codes=""
 
-  echo "\e[${code}m${msg}\e[${RESET_CODE}m"
+  for code in "${@:2}"; do
+   codes="${codes}\e[${code}m"
+  done
+
+  echo -e "${codes}${msg}\e[${RESET_CODE}m"
 }
 
 
