@@ -1,4 +1,4 @@
-#!/usr/bin/bash -
+#! /usr/bin/env sh
 
 RESET_CODE=0
 BOLD=1
@@ -12,7 +12,7 @@ DEFAULT=39
 BLACK=30
 RED=31
 GREEN=32
-YELLOWE=33
+YELLOW=33
 BLUE=34
 MAGENTA=35
 CYAN=36
@@ -45,29 +45,23 @@ BG_LIGHT_CYAN=106
 BG_WHITE=107
 
 
-function color_code(){
+function attr(){
   local msg=$1
   local codes=""
 
-  for code in "${@:2}"; do
-   codes="${codes}\e[${code}m"
+  for name in "${@:2}"; do
+    local code="${(P)name}"
+    codes="${codes}\e[${code}m"
   done
 
   echo -e "${codes}${msg}\e[${RESET_CODE}m"
 }
 
 
-function log_info(){
-  local msg=$1
-  echo "[INFO] $msg"
-  return;
-}
+function log_info() { attr "[INFO] $1" DARK_GRAY; return; }
 
-function log_err(){
-  local msg=$1
-  echo "[ERROR] $msg"
-  return;
-}
+function log_err()  { attr "[ERROR] $1" RED;  return; }
+
 
 function touch_dir(){
   local dir=$1
