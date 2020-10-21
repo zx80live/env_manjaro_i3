@@ -589,6 +589,16 @@ Define regex in the layout template `$ vim ~/.i3/ws-layout.json`
 
 `typora`- markdown editor
 
+For fixing some characters - create file `~/.config/typora/themes/base.user.css`
+
+```css
+body {
+  font-family: MesloLGS NF;
+}
+```
+
+
+
 
 
 ##### Virtualbox
