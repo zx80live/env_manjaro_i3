@@ -282,3 +282,26 @@ function map(){
   done
 }
 
+function inc() {
+  if [ -z "$2" ]; then
+    local step=1;
+  else
+    local step=$2;
+  fi
+
+  echo $(($1+$step))
+}
+
+function decorate(){
+  local str=$1
+  local left=$2
+  
+  if [ -z "$3" ]; then
+    local right=$left;
+  else
+    local right=$3;
+  fi
+
+  echo "$left$str$right"
+}
+
