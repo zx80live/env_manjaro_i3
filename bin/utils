@@ -1,4 +1,4 @@
-#! /usr/bin/env sh
+#! /bin/bash
 
 RESET_CODE=0
 BOLD=1
@@ -107,7 +107,7 @@ function attr(){
 }
 
 
-function log_info() { attr "[INFO] $1" DARK_GRAY; return; }
+function log_info() { attr "[INFO] $1" DARK_GREY; return; }
 
 function log_err()  { attr "[ERROR] $1" RED;  return; }
 
@@ -252,3 +252,33 @@ function replace(){
 
   echo $text | sed "s/$pattern/$replaced/g"
 }
+
+function find_line(){
+  local file=$1
+  local pattern=$2
+
+  grep -G $pattern $file
+}
+
+function replace_in_file(){
+  local file=$1
+  local pattern=$2
+  local replaced=$3
+
+  sed -i -e "s/$pattern/$replaced/g" $file
+}
+
+function map(){
+  local args=("$@")
+  local length=$((${#args[@]}-1))
+  local iterable=(${args:0:$length})
+  local funName=${args:$length}
+
+  log_info "iterable=$iterable"
+  log_info "function=$funName"
+
+  for e in $iterable; do
+    eval "$funName $e"
+  done
+}
+
