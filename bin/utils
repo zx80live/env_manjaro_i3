@@ -3,10 +3,12 @@
 RESET_CODE=0
 BOLD=1
 DIM=2
+ITALIC=3
 UNDERLINED=4
 BLINK=5
 REVERSE=7
 HIDDEN=8
+STRIKE=9
 
 DEFAULT=39
 BLACK=30
@@ -48,10 +50,13 @@ function attr_list(){
   attr "0   RESET_CODE" RESET_CODE
   attr "1   BOLD" BOLD
   attr "2   DIM" DIM
+  attr "3   ITALIC" DIM
   attr "4   UNDERLINED" UNDERLINED
   attr "5   BLINK" BLINK
   attr "7   REVERSE" REVERSE
-  attr "8   HIDDEN" HIDDEN
+  attr "8   HIDDEN" DARK_GREY
+  attr "9   STRIKE" STRIKE
+  attr ""
   attr "39  DEFAULT" DEFAULT
   attr "30  BLACK" DARK_GREY
   attr "31  RED" RED
@@ -233,4 +238,9 @@ function fill_left(){
   done
 
   echo $str
+}
+
+function short_id(){
+  local length=2
+  head /dev/urandom | tr -dc a-z0-9 | head -c $length ; echo ''
 }
