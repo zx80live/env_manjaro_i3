@@ -272,11 +272,11 @@ function replace_in_file(){
 # Examples:
 #   local arr=(1 2 3 4 5)
 #   
-#   map $arr echo                   # print each element
-#   map $arr 'inc $e 10'            # increment each element by `10`
-#   map $arr 'decorate $e "[" "]"'  # decorate each element by `[` and `]`
+#   foreach $arr echo                   # print each element
+#   foreach $arr 'inc $e 10'            # increment each element by `10`
+#   foreach $arr 'decorate $e "[" "]"'  # decorate each element by `[` and `]`
 ##
-function map(){
+function foreach(){
   local args=("$@")
   local length=$((${#args[@]}-1))
   local iterable=(${args:0:$length})
