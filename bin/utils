@@ -244,3 +244,11 @@ function short_id(){
   local length=2
   head /dev/urandom | tr -dc a-z0-9 | head -c $length ; echo ''
 }
+
+function replace(){
+  local text=$1
+  local pattern=$2
+  local replaced=$3
+
+  echo $text | sed "s/$pattern/$replaced/g"
+}
