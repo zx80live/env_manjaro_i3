@@ -498,6 +498,7 @@ bindsym Mod1+Tab exec rofi -show window -font "MesloLGS NF 16" -show-icons -them
 
 #-- [Keys.user] ---------------------------------------------------------------------------
 bindsym $mod+F2 exec --no-startup-id chromium --incognito
+bindsym $mod+Shift+v exec --no-startup-id alacritty -e vim -c 'startinsert'
 
 # -- extensions --
 # mount
