@@ -70,19 +70,51 @@ function todo_add(){
   echo $fullid
 }
 
+function _extract_all(){
+  local grpState="${cb}|${cb_on}"
+  local grpIdentity="[-_a-zA-Z0-9]+"
+  local regex="(${grpState})\s+\[(${grpIdentity})\|(${grpIdentity})\]\s+(.*)"
+
+  local fields=("${(@f)$(extract_regex_groups $1 $regex; echo .)}")
+  unset 'fields[-1]'
+
+  for f in ${fields[@]}; do
+    echo $f
+  done
+}
+
 function _extract_state(){
+  local fields=("${(@f)$(_extract_all $1; echo .)}")
+  unset 'fields[-1]'
+
+  echo ${fields[2]}
 }
 
 function _extract_group(){
+  local fields=("${(@f)$(_extract_all $1; echo .)}")
+  unset 'fields[-1]'
+
+  echo ${fields[3]}
 }
 
 function _extract_id(){
+  local fields=("${(@f)$(_extract_all $1; echo .)}")
+  unset 'fields[-1]'
+
+  echo ${fields[4]}
 }
 
 function _extract_task(){
+  local group=$(_extract_group $1)
+  local id=$(_extract_id $1)
+  echo "${group}|${id}"
 }
 
 function _extract_text(){
+  local fields=("${(@f)$(_extract_all $1; echo .)}")
+  unset 'fields[-1]'
+
+  echo ${fields[5]}
 }
 
 function todo_state(){
