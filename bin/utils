@@ -388,12 +388,22 @@ function extract_regex_groups(){
   fi
 }
 
-function unwrap(){
+function unwrap_line(){
   local str=$1
   local left=$2
   local right=$3
 
-  local t1=$(echo "${str//$left}")
-   
-  echo "${t1//$right}"
+  local regexLeft="^${left}*(.*)$"
+  local regexRight="^${right}*(.*)$"
+
+  local fields1=("${(@f)$(extract_regex_groups $str $regexLeft; echo .)}")
+  unset 'fields[-1]'
+
+  local res1=${fields1[2]}
+  local str2=$(echo $res1 | rev)
+
+  local fields2=("${(@f)$(extract_regex_groups $str2 $regexRight; echo .)}")
+  unset 'fields[-1]'
+
+  echo ${fields2[2]} | rev
 }
