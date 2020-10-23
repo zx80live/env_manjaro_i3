@@ -6,6 +6,7 @@ cb=''
 cb_on=''
 cont_left='`'
 cont_right=$cont_left
+child_level='·'
 
 function _make_path(){
   local group=$1
@@ -81,17 +82,38 @@ function todo_add(){
 function _extract_all(){
   local grpState="${cb}|${cb_on}"
   local grpIdentity="[-_a-zA-Z0-9]+"
-  local regex="(${grpState})\s+$cont_left(${grpIdentity})\|(${grpIdentity})$cont_right\s+(.*)"
+  local regex="^([${child_level}]{0,})(${grpState})\s+~*$cont_left(${grpIdentity})\|(${grpIdentity})$cont_right\s+(.*)"
 
   local fields=("${(@f)$(extract_regex_groups $1 $regex; echo .)}")
   unset 'fields[-1]'
+
+  local fields_length=${#fields[@]}
+
+  if [[ $fields_length = 6 ]]; then
+    
+    fields=(
+      ${fields[1]} 
+      ' ' 
+      ${fields[2]} 
+      ${fields[3]} 
+      ${fields[4]} 
+      ${fields[5]} 
+      ${fields[6]} 
+    )
+  
+  fi
 
   for f in ${fields[@]}; do
     echo $f
   done
 }
 
+function _extract_level(){
+  local fields=("${(@f)$(_extract_all $1; echo .)}")
+  unset 'fields[-1]'
 
+  echo ${fields[2]}
+}
 
 function _extract_body(){
   local grpState="${cb}|${cb_on}"
@@ -110,24 +132,24 @@ function _extract_state(){
   local fields=("${(@f)$(_extract_all $1; echo .)}")
   unset 'fields[-1]'
 
-  echo ${fields[2]}
+  echo ${fields[3]}
 }
 
 function _extract_group(){
   local fields=("${(@f)$(_extract_all $1; echo .)}")
   unset 'fields[-1]'
 
-  echo ${fields[3]}
+  echo ${fields[4]}
 }
 
 function _extract_id(){
   local fields=("${(@f)$(_extract_all $1; echo .)}")
   unset 'fields[-1]'
 
-  echo ${fields[4]}
+  echo ${fields[5]}
 }
 
-function _extract_task(){
+function _extract_path(){
   local group=$(_extract_group $1)
   local id=$(_extract_id $1)
   echo "${group}|${id}"
@@ -137,7 +159,7 @@ function _extract_text(){
   local fields=("${(@f)$(_extract_all $1; echo .)}")
   unset 'fields[-1]'
 
-  echo ${fields[5]}
+  echo ${fields[6]}
 }
 
 function todo_state(){
@@ -171,14 +193,19 @@ function todo_state(){
 
 
   for e in $array_of_lines[@];do
+    local level=$(_extract_level $e)
     local state=$(_extract_state $e)
     local body=$(_extract_body $e)
 
+    if [[ $level = ' ' ]]; then
+      level=''
+    fi
+
     if [[ $striked = 1 ]]; then
-      local result="${cb_on} ~~${body}~~"
+      local result="${level}${cb_on} ~~${body}~~"
       
     else
-      local result="${cb} ${body}"
+      local result="${level}${cb} ${body}"
     fi
 
     
