@@ -1,0 +1,58 @@
+#! /usr/bin/env sh
+
+source utils
+
+function cb() {
+  echo ''
+}
+
+function cb_on(){
+  echo ''
+}
+
+function todo(){
+  local task=$1
+  local text=$2
+  local id=$(short_id)
+  echo "$(cb) [$task-$id] $text"
+}
+
+function todos(){
+  local task
+  local file
+  local state=()
+
+  for i in "$@"; do
+    case $i in
+      -t=*|--task=*)
+        task="${i#*=}"
+        shift
+        ;;
+      -c|--closed)
+        state+=$(cb_on)
+        shift
+        ;;
+      -o|--opened)
+        state+=$(cb)
+        shift
+        ;;
+      *)
+        file="$i"
+        shift
+      ;;
+    esac
+  done
+
+  if [ ${#state[@]} -eq 0 ]; then
+    state=('' '')
+  fi
+
+
+  local pattern=$(mkstring $state -d='\|')
+
+  if [[ -n $task  ]]; then
+    pattern="\(${pattern}\)\(.*\)\(${task}\)"
+  fi
+
+  find_line $file $pattern
+}
