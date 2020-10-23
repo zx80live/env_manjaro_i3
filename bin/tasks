@@ -83,15 +83,19 @@ function _extract_all(){
   done
 }
 
+
+
 function _extract_body(){
   local grpState="${cb}|${cb_on}"
   local grpBody=".*"
-  local regex="(${grpState})\s+($grpBody)"
+  local regex="(${grpState})\s*($grpBody)$"
 
   local fields=("${(@f)$(extract_regex_groups $1 $regex; echo .)}")
   unset 'fields[-1]'
 
-  echo ${fields[3]}
+  local body=$(unwrap_line ${fields[3]} '~' '~')
+
+  echo $body 
 }
 
 function _extract_state(){
@@ -163,13 +167,10 @@ function todo_state(){
     local body=$(_extract_body $e)
 
     if [[ $striked = 1 ]]; then
-      local result=$(replace $e $cb $cb_on)
-      #result=$(decorate $result "~~")
+      local result="${cb_on} ~~${body}~~"
       
     else
-      local result=$(replace $e $cb_on $cb)
-      #result=$(drop_left $result 2)
-      #result=$(drop_right $result 2)
+      local result="${cb} ${body}"
     fi
 
     
