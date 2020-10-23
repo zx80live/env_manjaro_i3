@@ -370,3 +370,20 @@ newline_at_eof(){
     return 0;
   fi
 }
+
+function extract_regex_groups(){
+  local str=$1
+  local regex=$2
+
+  setopt local_options BASH_REMATCH
+
+  if [[ $str =~ $regex ]]; then
+
+    for e in $BASH_REMATCH[@]; do
+     echo $e
+    done
+
+  else
+    echo "NOT_FOUND"
+  fi
+}
