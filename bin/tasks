@@ -83,30 +83,40 @@ function collect_lines() {
   return $ret
 }
 
-function todo_close(){
-  local file=$1
-  local task=$2
+function todo_state(){
+  local file
+  local task
+  local state=($(cb) $(cb_on))
+  
+  for i in "$@"; do
+    case $i in
+      -t=*|--task=*)
+        task="${i#*=}"
+        shift
+        ;;
+      -c|--closed)
+        state=($(cb) $(cb_on))
+        shift
+        ;;
+      -o|--opened)
+        state=($(cb_on) $(cb))
+        shift
+        ;;
+      *)
+        file="$i"
+        shift
+      ;;
+    esac
+  done
 
   local array_of_lines=("${(@f)$(todos $file -t=$task; echo .)}")
   unset 'array_of_lines[-1]'
 
+
   for e in $array_of_lines[@];do
-    local result=$(replace $e $(cb) $(cb_on))
+    local result=$(replace $e ${state[1]} ${state[2]})
     
     replace_in_file $file $e $result
   done
 }
 
-function todo_open(){
-  local file=$1
-  local task=$2
-
-  local array_of_lines=("${(@f)$(todos $file -t=$task; echo .)}")
-  unset 'array_of_lines[-1]'
-
-  for e in $array_of_lines[@];do
-    local result=$(replace $e $(cb_on) $(cb))
-    
-    replace_in_file $file $e $result
-  done
-}
