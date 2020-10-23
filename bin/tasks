@@ -58,3 +58,24 @@ function todos(){
 
   find_line $file $pattern
 }
+
+
+function todo_add(){
+  local file=$1
+  local task=$2
+  local text=$3
+  local id=$(short_id)
+  local fullid="$task-$id"
+  local result="$(cb) [$fullid] $text"
+
+  
+
+  if newline_at_eof $file; then
+    echo $result >> $file
+  else
+    echo -n $result >> $file
+    echo "" >> $file
+  fi
+
+  echo $fullid
+}
