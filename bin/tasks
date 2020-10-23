@@ -49,12 +49,9 @@ function todos(){
 
 
   local pattern=$(mkstring $state -d='\|')
-  local anychar="\(.*\)"
   if [[ -n $task  ]]; then
     pattern="\(${pattern}\)${anychar}\[${anychar}${task}${anychar}\]"
   fi
-
-  log_info $pattern
 
   find_line $file $pattern
 }
@@ -68,8 +65,6 @@ function todo_add(){
   local fullid="$task-$id"
   local result="$(cb) [$fullid] $text"
 
-  
-
   if newline_at_eof $file; then
     echo $result >> $file
   else
@@ -78,4 +73,40 @@ function todo_add(){
   fi
 
   echo $fullid
+}
+
+function collect_lines() {
+  local IFS=$'\n\n' ret
+  array_of_lines=($("$@"; ret=$?; echo .; exit $ret))
+  ret=$?
+  unset 'array_of_lines[-1]'
+  return $ret
+}
+
+function todo_close(){
+  local file=$1
+  local task=$2
+
+  local array_of_lines=("${(@f)$(todos $file -t=$task; echo .)}")
+  unset 'array_of_lines[-1]'
+
+  for e in $array_of_lines[@];do
+    local result=$(replace $e $(cb) $(cb_on))
+    
+    replace_in_file $file $e $result
+  done
+}
+
+function todo_open(){
+  local file=$1
+  local task=$2
+
+  local array_of_lines=("${(@f)$(todos $file -t=$task; echo .)}")
+  unset 'array_of_lines[-1]'
+
+  for e in $array_of_lines[@];do
+    local result=$(replace $e $(cb_on) $(cb))
+    
+    replace_in_file $file $e $result
+  done
 }
