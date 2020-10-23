@@ -218,10 +218,6 @@ function todo_add_child(){
   local task=$2
   local text=$3
 
-  log_info $file
-  log_info $path
-  log_info $text
-
   local arr=("${(@f)$(todos $file -t=$task; echo .)}")
   unset 'arr[-1]'
   local line=${arr[1]}
