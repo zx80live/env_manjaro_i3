@@ -310,10 +310,11 @@ function replace_in_file(){
   local file=$1
   local target=$2
   local replacement=$3
-  local char='['
-  local escapedTarget=$(sed 's/['$char'/\]/\\'$char'/g' <<<"$target")
 
-  sed -i -e "s/$escapedTarget/$replacement/g" $file
+  local es1=$(sed 's/[[/\]/\\[/g' <<<"$target")
+
+
+  sed -i -e "s/$es1/$replacement/g" $file
 }
 
 ##
