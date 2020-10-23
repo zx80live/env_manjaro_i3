@@ -50,7 +50,7 @@ function attr_list(){
   attr "0   RESET_CODE" RESET_CODE
   attr "1   BOLD" BOLD
   attr "2   DIM" DIM
-  attr "3   ITALIC" DIM
+  attr "3   ITALIC" ITALIC
   attr "4   UNDERLINED" UNDERLINED
   attr "5   BLINK" BLINK
   attr "7   REVERSE" REVERSE
