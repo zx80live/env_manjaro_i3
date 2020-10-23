@@ -351,3 +351,12 @@ function decorate(){
   echo "$left$str$right"
 }
 
+newline_at_eof(){
+  local filename=$1
+  local isblank=$(sed -n '$p' $filename | grep -q '^$' && echo 'blank')
+  if [[ $isblank = "blank" ]] ; then
+    return 1; 
+  else
+    return 0;
+  fi
+}
