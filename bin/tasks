@@ -49,10 +49,12 @@ function todos(){
 
 
   local pattern=$(mkstring $state -d='\|')
-
+  local anychar="\(.*\)"
   if [[ -n $task  ]]; then
-    pattern="\(${pattern}\)\(.*\)\(${task}\)"
+    pattern="\(${pattern}\)${anychar}\[${anychar}${task}${anychar}\]"
   fi
+
+  log_info $pattern
 
   find_line $file $pattern
 }
