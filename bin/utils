@@ -387,3 +387,13 @@ function extract_regex_groups(){
     echo "NOT_FOUND"
   fi
 }
+
+function unwrap(){
+  local str=$1
+  local left=$2
+  local right=$3
+
+  local t1=$(echo "${str//$left}")
+   
+  echo "${t1//$right}"
+}
