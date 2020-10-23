@@ -78,7 +78,7 @@ function todo_add(){
 function todo_state(){
   local file
   local task
-  local state=($(cb) $(cb_on))
+  local striked=0
   
   for i in "$@"; do
     case $i in
@@ -87,11 +87,11 @@ function todo_state(){
         shift
         ;;
       -c|--closed)
-        state=($(cb) $(cb_on))
+        striked=1
         shift
         ;;
       -o|--opened)
-        state=($(cb_on) $(cb))
+        striked=0
         shift
         ;;
       *)
@@ -106,7 +106,16 @@ function todo_state(){
 
 
   for e in $array_of_lines[@];do
-    local result=$(replace $e ${state[1]} ${state[2]})
+    if [[ $striked = 1 ]]; then
+      local result=$(replace $e $(cb) $(cb_on))
+      #result=$(decorate $result "~~")
+      
+    else
+      local result=$(replace $e $(cb_on) $(cb))
+      #result=$(drop_left $result 2)
+      #result=$(drop_right $result 2)
+    fi
+
     
     replace_in_file $file $e $result
   done
