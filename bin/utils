@@ -245,6 +245,44 @@ function short_id(){
   head /dev/urandom | tr -dc a-z0-9 | head -c $length ; echo ''
 }
 
+function mkstring(){
+  local arr=()
+  local delim
+  local left
+  local right
+
+  for i in "$@"; do
+    case $i in
+      -d=*|--delim=*)
+        delim="${i#*=}"
+        shift
+        ;;
+      -l=*|--left=*)
+        left="${i#*=}"
+        shift
+        ;;
+      -r=*|--right=*)
+        right="${i#*=}"
+        shift
+        ;;
+      *)
+        arr+="${i}"
+        shift
+      ;;
+    esac
+  done
+
+  local str=""
+  for e in $arr; do
+    str="${e}${delim}${str}"
+  done
+
+  local delim_length=$(strlen $delim)
+  str=$(drop_right "$str" $delim_length)
+ 
+  echo $(decorate $str $left $right)
+}
+
 function replace(){
   local text=$1
   local pattern=$2
@@ -257,7 +295,7 @@ function find_line(){
   local file=$1
   local pattern=$2
 
-  grep -G $pattern $file
+  grep -G "$pattern" $file
 }
 
 function replace_in_file(){
