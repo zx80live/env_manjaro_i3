@@ -308,10 +308,12 @@ function find_line(){
 
 function replace_in_file(){
   local file=$1
-  local pattern=$2
-  local replaced=$3
+  local target=$2
+  local replacement=$3
+  local char='['
+  local escapedTarget=$(sed 's/['$char'/\]/\\'$char'/g' <<<"$target")
 
-  sed -i -e "s/$pattern/$replaced/g" $file
+  sed -i -e "s/$escapedTarget/$replacement/g" $file
 }
 
 ##
