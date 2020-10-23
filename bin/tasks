@@ -2,19 +2,14 @@
 
 source utils
 
-function cb() {
-  echo ''
-}
-
-function cb_on(){
-  echo ''
-}
+cb=''
+cb_on=''
 
 function todo(){
   local task=$1
   local text=$2
   local id=$(short_id)
-  echo "$(cb) [$task-$id] $text"
+  echo "$cb [$task-$id] $text"
 }
 
 function todos(){
@@ -29,11 +24,11 @@ function todos(){
         shift
         ;;
       -c|--closed)
-        state+=$(cb_on)
+        state+=$cb_on
         shift
         ;;
       -o|--opened)
-        state+=$(cb)
+        state+=$cb
         shift
         ;;
       *)
@@ -44,7 +39,7 @@ function todos(){
   done
 
   if [ ${#state[@]} -eq 0 ]; then
-    state=('' '')
+    state=($cb_on $cb)
   fi
 
 
@@ -63,7 +58,7 @@ function todo_add(){
   local text=$3
   local id=$(short_id)
   local fullid="$task-$id"
-  local result="$(cb) [$fullid] $text"
+  local result="$cb [$fullid] $text"
 
   if newline_at_eof $file; then
     echo $result >> $file
@@ -73,6 +68,21 @@ function todo_add(){
   fi
 
   echo $fullid
+}
+
+function _extract_state(){
+}
+
+function _extract_group(){
+}
+
+function _extract_id(){
+}
+
+function _extract_task(){
+}
+
+function _extract_text(){
 }
 
 function todo_state(){
@@ -107,11 +117,11 @@ function todo_state(){
 
   for e in $array_of_lines[@];do
     if [[ $striked = 1 ]]; then
-      local result=$(replace $e $(cb) $(cb_on))
+      local result=$(replace $e $cb $cb_on)
       #result=$(decorate $result "~~")
       
     else
-      local result=$(replace $e $(cb_on) $(cb))
+      local result=$(replace $e $cb_on $cb)
       #result=$(drop_left $result 2)
       #result=$(drop_right $result 2)
     fi
