@@ -4,12 +4,21 @@ source utils
 
 cb=''
 cb_on=''
+cont_left='`'
+cont_right=$cont_left
 
-function todo(){
+function _make_path(){
+  local group=$1
+  local id=$2
+  local result=$cont_left$group'|'$id$cont_right
+  echo $result
+}
+
+function _make_todo(){
   local task=$1
   local text=$2
   local id=$(short_id)
-  echo "$cb [$task-$id] $text"
+  echo "$cb $(_make_path $task $id) $text"
 }
 
 function todos(){
@@ -45,7 +54,7 @@ function todos(){
 
   local pattern=$(mkstring $state -d='\|')
   if [[ -n $task  ]]; then
-    pattern="\(${pattern}\)${anychar}\[${anychar}${task}${anychar}\]"
+    pattern="\(${pattern}\)${anychar}$cont_left${anychar}${task}${anychar}$cont_left"
   fi
 
   find_line $file $pattern
@@ -54,11 +63,10 @@ function todos(){
 
 function todo_add(){
   local file=$1
-  local task=$2
+  local group=$2
   local text=$3
   local id=$(short_id)
-  local fullid="$task-$id"
-  local result="$cb [$fullid] $text"
+  local result="$cb $(_make_path $group $id) $text"
 
   if newline_at_eof $file; then
     echo $result >> $file
@@ -73,7 +81,7 @@ function todo_add(){
 function _extract_all(){
   local grpState="${cb}|${cb_on}"
   local grpIdentity="[-_a-zA-Z0-9]+"
-  local regex="(${grpState})\s+\[(${grpIdentity})\|(${grpIdentity})\]\s+(.*)"
+  local regex="(${grpState})\s+$cont_left(${grpIdentity})\|(${grpIdentity})$cont_right\s+(.*)"
 
   local fields=("${(@f)$(extract_regex_groups $1 $regex; echo .)}")
   unset 'fields[-1]'
