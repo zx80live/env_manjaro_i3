@@ -75,14 +75,6 @@ function todo_add(){
   echo $fullid
 }
 
-function collect_lines() {
-  local IFS=$'\n\n' ret
-  array_of_lines=($("$@"; ret=$?; echo .; exit $ret))
-  ret=$?
-  unset 'array_of_lines[-1]'
-  return $ret
-}
-
 function todo_state(){
   local file
   local task
