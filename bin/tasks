@@ -109,6 +109,15 @@ function _extract_text(){
   echo ${fields[6]}
 }
 
+function _extract_parent_id(){
+  local id=$1
+  local regex="(.*)-[a-z0-9]+$"
+  local fields=("${(@f)$(extract_regex_groups $1 $regex; echo .)}")
+  unset 'fields[-1]'
+
+  echo ${fields[2]}
+}
+
 
 ##-- API --------------------------------------------------------------------------------------------------------
 function todos(){

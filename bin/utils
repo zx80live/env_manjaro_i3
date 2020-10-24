@@ -46,6 +46,8 @@ BG_LIGHT_MAGENTA=105
 BG_LIGHT_CYAN=106
 BG_WHITE=107
 
+SHORT_ID_LENGTH=3
+
 function attr_list(){
   attr "0   RESET_CODE" RESET_CODE
   attr "1   BOLD" BOLD
@@ -242,9 +244,9 @@ function fill_left(){
   echo $str
 }
 
+
 function short_id(){
-  local length=3
-  head /dev/urandom | tr -dc a-z0-9 | head -c $length ; echo ''
+  head /dev/urandom | tr -dc a-z0-9 | head -c $SHORT_ID_LENGTH ; echo ''
 }
 
 function mkstring(){
@@ -385,7 +387,7 @@ function extract_regex_groups(){
     done
 
   else
-    echo "NOT_FOUND"
+    #echo "NOT_FOUND"
   fi
 }
 
