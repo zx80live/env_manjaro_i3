@@ -206,6 +206,7 @@ function set_state(){
   fi
 }
 
+#@deprecated
 function todos(){
   local task
   local file
@@ -246,6 +247,7 @@ function todos(){
   find_line $file $pattern
 }
 
+#@deprecated
 function todo_state(){
   local file
   local task
@@ -295,6 +297,7 @@ function todo_state(){
   done
 }
 
+#@deprecated
 function todo_add(){
   local file=$1
   local group=$2
@@ -313,6 +316,7 @@ function todo_add(){
   echo $id
 }
 
+#@deprecated
 function todo_add_child(){
   local file=$1
   local task=$2
