@@ -8,6 +8,12 @@ cont_left='`'
 cont_right=$cont_left
 child_level='·'
 
+regex_state="$cb|$cb_on"
+regex_level='·'
+regex_left_brace='`'
+regex_right_brace='`'
+regex_identity="[-_a-zA-Z0-9]+"
+
 
 ##-- builders ---------------------------------------------------------------------------------------------------
 function _make_path(){
@@ -27,9 +33,7 @@ function _make_todo(){
 
 ##-- extractors -------------------------------------------------------------------------------------------------
 function _extract_all(){
-  local grpState="${cb}|${cb_on}"
-  local grpIdentity="[-_a-zA-Z0-9]+"
-  local regex="^([${child_level}]{0,})\s*(${grpState})\s+~*$cont_left(${grpIdentity})\|(${grpIdentity})$cont_right\s+(.*)"
+  local regex="^([$regex_level]{0,})\s*($regex_state)\s+~*$regex_left_brace($regex_identity)\|($regex_identity)$regex_right_brace\s+(.*)"
 
   local fields=("${(@f)$(extract_regex_groups $1 $regex; echo .)}")
   unset 'fields[-1]'
@@ -63,9 +67,7 @@ function _extract_level(){
 }
 
 function _extract_body(){
-  local grpState="${cb}|${cb_on}"
-  local grpBody=".*"
-  local regex="(${grpState})\s*($grpBody)$"
+  local regex="($regex_state)\s*(.*)$"
 
   local fields=("${(@f)$(extract_regex_groups $1 $regex; echo .)}")
   unset 'fields[-1]'
@@ -132,6 +134,15 @@ function _extract_parent_ids(){
 }
 
 ##-- API --------------------------------------------------------------------------------------------------------
+function find_by_id(){
+  #local id=$1
+  #local regex="${cont_left}$regex_identity\|($regex_identity)${cont_right}"
+}
+
+function find_subtree(){
+
+}
+
 function todos(){
   local task
   local file
@@ -165,7 +176,7 @@ function todos(){
 
   local pattern=$(mkstring $state -d='\|')
   if [[ -n $task  ]]; then
-    pattern="\(${pattern}\)${anychar}$cont_left${anychar}${task}${anychar}$cont_left"
+    pattern="\(${pattern}\)${anychar}$regex_left_brace${anychar}${task}${anychar}$regex_right_brace"
   fi
 
   find_line $file $pattern
