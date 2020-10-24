@@ -150,6 +150,15 @@ function find_subtree(){
   grep -E $regex $file
 }
 
+function get_parents(){
+  local file=$1
+  local id=$2
+  local line=$(find_by_id $file $id)
+  local current_id=$(_extract_id $line)
+
+  _extract_parent_ids $current_id
+}
+
 function todos(){
   local task
   local file
