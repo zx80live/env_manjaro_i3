@@ -143,6 +143,11 @@ function find_by_id(){
 }
 
 function find_subtree(){
+  local file=$1
+  local id=$2
+  local regex="$regex_left_brace$regex_identity\|$regex_identity*$id$regex_identity*$regex_right_brace"
+
+  grep -E $regex $file
 }
 
 function todos(){
