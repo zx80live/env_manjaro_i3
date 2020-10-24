@@ -10,10 +10,17 @@ child_level='·'
 NONE='NONE'
 
 regex_state="$cb|$cb_on"
-regex_level='·'
+regex_level='[·]*'
 regex_left_brace='`'
 regex_right_brace='`'
 regex_identity="[-_a-zA-Z0-9]+"
+
+IDX_LEVEL=1
+IDX_STATE=2
+IDX_BODY=3
+IDX_GROUP=4
+IDX_ID=5
+IDX_TEXT=6
 
 
 ##-- builders ---------------------------------------------------------------------------------------------------
@@ -59,88 +66,64 @@ function _make_closed(){
 }
 
 ##-- extractors -------------------------------------------------------------------------------------------------
-function _extract_all(){
-  local regex="^([$regex_level]{0,})\s*($regex_state)\s+~*$regex_left_brace($regex_identity)\|($regex_identity)$regex_right_brace\s+(.*)"
+function _extract_fields(){
+  local line=$1
+  local regex_line="($regex_level)\s*($regex_state)\s*(\~*$regex_left_brace($regex_identity)\|($regex_identity)$regex_right_brace(.*))"
 
-  local fields=("${(@f)$(extract_regex_groups $1 $regex; echo .)}")
-  unset 'fields[-1]'
+  local arr=("${(@f)$(extract_regex_groups $1 $regex_line; echo .)}"); unset 'arr[-1]'
 
-  local fields_length=${#fields[@]}
-
-  if [[ $fields_length = 6 ]]; then
-    
-    fields=(
-      ${fields[1]}  
-      ' ' 
-      ${fields[2]} 
-      ${fields[3]}
-      ${fields[4]}
-      ${fields[5]}
-      ${fields[6]}
-    )
-  
+  # if level does not exist
+  if [[ ${#arr[@]} = 7 ]]; then
+    arr=(${arr[1]} $NONE ${arr[2]} ${arr[3]} ${arr[4]} ${arr[5]} ${arr[6]})
   fi
+
+  local parsed_level=${arr[2]}
+  local parsed_state=${arr[3]}
+  local parsed_body=$(unwrap_line ${arr[4]} '\~' '\~')
+  local parsed_group=${arr[5]}
+  local parsed_id=${arr[6]}
+  local parsed_text=$(unwrap_line ${arr[7]} '\~' '\~')
+  local fields=(
+          $parsed_level
+          $parsed_state
+          $parsed_body
+          $parsed_group
+          $parsed_id
+          $parsed_text
+        )
 
   for f in ${fields[@]}; do
     echo $f
   done
 }
 
-function _extract_level(){
-  local fields=("${(@f)$(_extract_all $1; echo .)}")
-  unset 'fields[-1]'
+function _extract_field(){
+ local fields=("${(@f)$(_extract_fields $1; echo .)}"); unset 'arr[-1]'
+ echo ${fields[$2]}
+}
 
-  echo ${fields[2]}
+function _extract_level(){  
+  echo $(_extract_field $1 $IDX_LEVEL) 
 }
 
 function _extract_body(){
-  local regex="($regex_state)\s*(.*)$"
-
-  local fields=("${(@f)$(extract_regex_groups $1 $regex; echo .)}")
-  unset 'fields[-1]'
-
-  local body=$(unwrap_line ${fields[3]} '~' '~')
-
-  echo $body 
+  echo $(_extract_field $1 $IDX_BODY) 
 }
 
 function _extract_state(){
-  local fields=("${(@f)$(_extract_all $1; echo .)}")
-  unset 'fields[-1]'
-
-  echo ${fields[3]}
+  echo $(_extract_field $1 $IDX_STATE) 
 }
 
 function _extract_group(){
-  local fields=("${(@f)$(_extract_all $1; echo .)}")
-  unset 'fields[-1]'
-
-  echo ${fields[4]}
+  echo $(_extract_field $1 $IDX_GROUP) 
 }
 
 function _extract_id(){
-  local fields=("${(@f)$(_extract_all $1; echo .)}")
-  unset 'fields[-1]'
-
-  echo ${fields[5]}
-}
-
-function _extract_path(){
-  local group=$(_extract_group $1)
-  local id=$(_extract_id $1)
-  echo "${group}|${id}"
-}
-
-function _extract_id_container(){
-  local curr_path=$(_extract_path $1)
-  echo $(_make_path)
+  echo $(_extract_field $1 $IDX_ID) 
 }
 
 function _extract_text(){
-  local fields=("${(@f)$(_extract_all $1; echo .)}")
-  unset 'fields[-1]'
-
-  echo ${fields[6]}
+  echo $(_extract_field $1 $IDX_TEXT) 
 }
 
 function _extract_parent_id(){
@@ -164,6 +147,21 @@ function _extract_parent_ids(){
     fi
   done
 }
+
+#@deprecated
+function _extract_path(){
+  local group=$(_extract_group $1)
+  local id=$(_extract_id $1)
+  echo "${group}|${id}"
+}
+
+#@deprecated
+function _extract_id_container(){
+  local curr_path=$(_extract_path $1)
+  echo $(_make_path)
+}
+
+
 
 ##-- API --------------------------------------------------------------------------------------------------------
 function find_by_id(){
