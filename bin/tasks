@@ -135,12 +135,14 @@ function _extract_parent_ids(){
 
 ##-- API --------------------------------------------------------------------------------------------------------
 function find_by_id(){
-  #local id=$1
-  #local regex="${cont_left}$regex_identity\|($regex_identity)${cont_right}"
+  local file=$1
+  local id=$2
+  local regex="$regex_left_brace$regex_identity\|(($regex_identity-$id)|($id))$regex_right_brace"
+
+  grep -E $regex $file
 }
 
 function find_subtree(){
-
 }
 
 function todos(){
