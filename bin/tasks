@@ -67,7 +67,8 @@ function todo_add(){
   local group=$2
   local text=$3
   local id=$(short_id)
-  local result="$cb $(_make_path $group $id) $text"
+  local full_id=$(_make_path $group $id)
+  local result="$cb $full_id $text"
 
   if newline_at_eof $file; then
     echo $result >> $file
@@ -76,7 +77,7 @@ function todo_add(){
     echo "" >> $file
   fi
 
-  echo $fullid
+  echo $id
 }
 
 function _extract_all(){
@@ -225,13 +226,16 @@ function todo_add_child(){
   local parent_group=$(_extract_group $line)
   local parent_id=$(_extract_id $line)
   local id="${parent_id}-$(short_id)"
+  local full_id=$(_make_path $parent_group $id)
 
   if [[ $parent_level = ' ' ]]; then
     parent_level=''
   fi
 
-  local child="${line}\n${parent_level}·· $cb $(_make_path $parent_group $id) $text"
+  local child="${line}\n${parent_level}·· $cb $full_id $text"
   
 
   replace_in_file $file $line $child
+
+  echo $id
 }

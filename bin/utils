@@ -243,7 +243,7 @@ function fill_left(){
 }
 
 function short_id(){
-  local length=2
+  local length=3
   head /dev/urandom | tr -dc a-z0-9 | head -c $length ; echo ''
 }
 
