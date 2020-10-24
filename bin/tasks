@@ -118,6 +118,18 @@ function _extract_parent_id(){
   echo ${fields[2]}
 }
 
+function _extract_parent_ids(){
+  local current_id=$1
+  local ids=()
+
+  while [ -n "$current_id" ]; do
+    current_id=$(_extract_parent_id $current_id)
+    local len=${#current_id}
+    if [[ $len > 0 ]]; then
+      echo $current_id
+    fi
+  done
+}
 
 ##-- API --------------------------------------------------------------------------------------------------------
 function todos(){
