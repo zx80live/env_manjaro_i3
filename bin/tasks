@@ -27,6 +27,7 @@ IDX_TEXT=6
 
 ##-- builders ---------------------------------------------------------------------------------------------------
 function _to_state(){
+
   case $1 in
     -o|--open|o|0)
       echo $cb
@@ -62,7 +63,7 @@ function _make_line(){
   echo $line
 }
 
-function _to_state(){
+function _set_state(){
   local line=$1
   local state=$2
 
@@ -73,7 +74,7 @@ function _to_state(){
 }
 
 function _to_opened(){
-  echo $(_to_state $1 $cb)
+  echo $(_set_state $1 $cb)
 }
 
 function _to_closed(){
@@ -200,9 +201,9 @@ function set_state(){
   fi
 
   if [ $state = $cb ]; then
-    #log_info "open current task and parent nodes"
+    log_info "open current task and parent nodes"
   else
-    #log_info "clise current task and child nodes"
+    log_info "close current task and child nodes"
   fi
 }
 
