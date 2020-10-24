@@ -221,16 +221,16 @@ function todo_add_child(){
   local arr=("${(@f)$(todos $file -t=$task; echo .)}")
   unset 'arr[-1]'
   local line=${arr[1]}
-  local current_path=$(_extract_path $line)
-  local level=$(_extract_level $line)
-  local id=$(short_id)
+  local parent_level=$(_extract_level $line)
+  local parent_group=$(_extract_group $line)
+  local parent_id=$(_extract_id $line)
+  local id="${parent_id}-$(short_id)"
 
-  if [[ $level = ' ' ]]; then
-    level=''
+  if [[ $parent_level = ' ' ]]; then
+    parent_level=''
   fi
 
-
-  local child="${line}\n${level}·· $cb $(_make_path $current_path $id) $text"
+  local child="${line}\n${parent_level}·· $cb $(_make_path $parent_group $id) $text"
   
 
   replace_in_file $file $line $child
