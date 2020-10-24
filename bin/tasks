@@ -174,9 +174,10 @@ function todos(){
   fi
 
 
-  local pattern=$(mkstring $state -d='\|')
+  local regex_curr_state=$(mkstring $state -d='\|')
+  local pattern
   if [[ -n $task  ]]; then
-    pattern="\(${pattern}\)${anychar}$regex_left_brace${anychar}${task}${anychar}$regex_right_brace"
+    pattern="\($regex_curr_state\)$regex_anychar$regex_left_brace$regex_anychar${task}$regex_anychar$regex_right_brace"
   fi
 
   find_line $file $pattern

@@ -96,7 +96,7 @@ function attr_list(){
   attr "107 BG_WHITE" BG_WHITE DARK_GREY
 }
 
-local anychar="\(.*\)"
+regex_anychar="\(.*\)"
 
 function attr(){
   local msg=$1
