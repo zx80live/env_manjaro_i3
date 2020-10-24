@@ -82,7 +82,7 @@ function todo_add(){
 function _extract_all(){
   local grpState="${cb}|${cb_on}"
   local grpIdentity="[-_a-zA-Z0-9]+"
-  local regex="^([${child_level}]{0,})(${grpState})\s+~*$cont_left(${grpIdentity})\|(${grpIdentity})$cont_right\s+(.*)"
+  local regex="^([${child_level}]{0,})\s*(${grpState})\s+~*$cont_left(${grpIdentity})\|(${grpIdentity})$cont_right\s+(.*)"
 
   local fields=("${(@f)$(extract_regex_groups $1 $regex; echo .)}")
   unset 'fields[-1]'
