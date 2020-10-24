@@ -7,6 +7,7 @@ cb_on=''
 cont_left='`'
 cont_right=$cont_left
 child_level='·'
+NONE='NONE'
 
 regex_state="$cb|$cb_on"
 regex_level='·'
@@ -16,6 +17,7 @@ regex_identity="[-_a-zA-Z0-9]+"
 
 
 ##-- builders ---------------------------------------------------------------------------------------------------
+#@deprecated
 function _make_path(){
   local group=$1
   local id=$2
@@ -30,6 +32,31 @@ function _make_todo(){
   echo "$cb $(_make_path $task $id) $text"
 }
 
+function _to_state(){
+  
+  case $1 in
+    -o|--open|o|0)
+      echo $cb
+      ;;
+    -c|--close|c|1)
+      echo $cb_on
+      ;;
+    *)
+      echo $NONE
+    ;;
+  esac
+}
+
+function _make_opened(){
+  local line=$1
+  local opened=$(replace $line $cb_on $cb)
+  local underline_removed=$(replace $opened '~~' '')
+
+  echo $underline_removed
+}
+
+function _make_closed(){
+}
 
 ##-- extractors -------------------------------------------------------------------------------------------------
 function _extract_all(){
@@ -43,13 +70,13 @@ function _extract_all(){
   if [[ $fields_length = 6 ]]; then
     
     fields=(
-      ${fields[1]} 
+      ${fields[1]}  
       ' ' 
       ${fields[2]} 
-      ${fields[3]} 
-      ${fields[4]} 
-      ${fields[5]} 
-      ${fields[6]} 
+      ${fields[3]}
+      ${fields[4]}
+      ${fields[5]}
+      ${fields[6]}
     )
   
   fi
@@ -102,6 +129,11 @@ function _extract_path(){
   local group=$(_extract_group $1)
   local id=$(_extract_id $1)
   echo "${group}|${id}"
+}
+
+function _extract_id_container(){
+  local curr_path=$(_extract_path $1)
+  echo $(_make_path)
 }
 
 function _extract_text(){
@@ -157,6 +189,23 @@ function get_parents(){
   local current_id=$(_extract_id $line)
 
   _extract_parent_ids $current_id
+}
+
+function set_state(){
+  local file=$1
+  local id=$2
+  local state=$(_to_state $3)
+
+  if [ $state = $NONE ];then
+    log_err "unknown state $state"
+    return;
+  fi
+
+  if [ $state = $cb ]; then
+    #log_info "open current task and parent nodes"
+  else
+    #log_info "clise current task and child nodes"
+  fi
 }
 
 function todos(){
