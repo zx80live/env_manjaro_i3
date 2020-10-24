@@ -4,8 +4,9 @@ source utils
 
 cb=''
 cb_on=''
-cont_left='`'
-cont_right=$cont_left
+left_brace='`'
+right_brace=$cont_left
+group_delimiter='|'
 child_level='·'
 NONE='NONE'
 
@@ -13,6 +14,7 @@ regex_state="$cb|$cb_on"
 regex_level='[·]*'
 regex_left_brace='`'
 regex_right_brace='`'
+regex_group_delimiter='\|'
 regex_identity="[-_a-zA-Z0-9]+"
 
 IDX_LEVEL=1
@@ -24,23 +26,7 @@ IDX_TEXT=6
 
 
 ##-- builders ---------------------------------------------------------------------------------------------------
-#@deprecated
-function _make_path(){
-  local group=$1
-  local id=$2
-  local result=$cont_left$group'|'$id$cont_right
-  echo $result
-}
-
-function _make_todo(){
-  local task=$1
-  local text=$2
-  local id=$(short_id)
-  echo "$cb $(_make_path $task $id) $text"
-}
-
 function _to_state(){
-  
   case $1 in
     -o|--open|o|0)
       echo $cb
@@ -54,15 +40,44 @@ function _to_state(){
   esac
 }
 
-function _make_opened(){
-  local line=$1
-  local opened=$(replace $line $cb_on $cb)
-  local underline_removed=$(replace $opened '~~' '')
+function _make_body(){
+  local group=$1
+  local id=$2
+  local text=$3
 
-  echo $underline_removed
+  local body="$left_brace$group$group_delimiter$id$right_brace $text"
+  echo $body
 }
 
-function _make_closed(){
+function _make_line(){
+  local level=$1
+  local state=$2
+  local body=$3
+  
+  if [[ $state = $cb_on ]]; then
+    body="~~$body~~"
+  fi
+
+  local line="$level$state $body"
+  echo $line
+}
+
+function _to_state(){
+  local line=$1
+  local state=$2
+
+  local level=$(_extract_level $line)
+  local body=$(_extract_body $line)
+  
+  echo $(_make_line $level $state $body)
+}
+
+function _to_opened(){
+  echo $(_to_state $1 $cb)
+}
+
+function _to_closed(){
+  echo $(_to_state $1 $cb_on)
 }
 
 ##-- extractors -------------------------------------------------------------------------------------------------
@@ -147,21 +162,6 @@ function _extract_parent_ids(){
     fi
   done
 }
-
-#@deprecated
-function _extract_path(){
-  local group=$(_extract_group $1)
-  local id=$(_extract_id $1)
-  echo "${group}|${id}"
-}
-
-#@deprecated
-function _extract_id_container(){
-  local curr_path=$(_extract_path $1)
-  echo $(_make_path)
-}
-
-
 
 ##-- API --------------------------------------------------------------------------------------------------------
 function find_by_id(){
