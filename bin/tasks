@@ -209,11 +209,9 @@ function todo_state(){
     esac
   done
 
-  local array_of_lines=("${(@f)$(todos $file -t=$task; echo .)}")
-  unset 'array_of_lines[-1]'
+  local arr=("${(@f)$(todos $file -t=$task; echo .)}"); unset 'arr[-1]'
 
-
-  for e in $array_of_lines[@];do
+  for e in $arr[@];do
     local level=$(_extract_level $e)
     local state=$(_extract_state $e)
     local body=$(_extract_body $e)
@@ -257,8 +255,8 @@ function todo_add_child(){
   local task=$2
   local text=$3
 
-  local arr=("${(@f)$(todos $file -t=$task; echo .)}")
-  unset 'arr[-1]'
+  local arr=("${(@f)$(todos $file -t=$task; echo .)}"); unset 'arr[-1]'
+
   local line=${arr[1]}
   local parent_level=$(_extract_level $line)
   local parent_group=$(_extract_group $line)
@@ -270,7 +268,7 @@ function todo_add_child(){
     parent_level=''
   fi
 
-  local child="${line}\n${parent_level}·· $cb $full_id $text"
+  local child="${line}\n${parent_level}··$cb $full_id $text"
   
 
   replace_in_file $file $line $child
