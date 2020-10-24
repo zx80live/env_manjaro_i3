@@ -8,6 +8,8 @@ cont_left='`'
 cont_right=$cont_left
 child_level='·'
 
+
+##-- builders ---------------------------------------------------------------------------------------------------
 function _make_path(){
   local group=$1
   local id=$2
@@ -22,64 +24,8 @@ function _make_todo(){
   echo "$cb $(_make_path $task $id) $text"
 }
 
-function todos(){
-  local task
-  local file
-  local state=()
 
-  for i in "$@"; do
-    case $i in
-      -t=*|--task=*)
-        task="${i#*=}"
-        shift
-        ;;
-      -c|--closed)
-        state+=$cb_on
-        shift
-        ;;
-      -o|--opened)
-        state+=$cb
-        shift
-        ;;
-      *)
-        file="$i"
-        shift
-      ;;
-    esac
-  done
-
-  if [ ${#state[@]} -eq 0 ]; then
-    state=($cb_on $cb)
-  fi
-
-
-  local pattern=$(mkstring $state -d='\|')
-  if [[ -n $task  ]]; then
-    pattern="\(${pattern}\)${anychar}$cont_left${anychar}${task}${anychar}$cont_left"
-  fi
-
-  find_line $file $pattern
-}
-
-
-function todo_add(){
-  local file=$1
-  local group=$2
-  local text=$3
-  local id=$(short_id)
-  local full_id=$(_make_path $group $id)
-  local result="$cb $full_id $text"
-
-  if newline_at_eof $file; then
-    echo $result >> $file
-  else
-    echo -n $result >> $file
-    echo "" >> $file
-  fi
-
-  echo $id
-}
-
+##-- extractors -------------------------------------------------------------------------------------------------
 function _extract_all(){
   local grpState="${cb}|${cb_on}"
   local grpIdentity="[-_a-zA-Z0-9]+"
@@ -163,6 +109,47 @@ function _extract_text(){
   echo ${fields[6]}
 }
 
+
+##-- API --------------------------------------------------------------------------------------------------------
+function todos(){
+  local task
+  local file
+  local state=()
+
+  for i in "$@"; do
+    case $i in
+      -t=*|--task=*)
+        task="${i#*=}"
+        shift
+        ;;
+      -c|--closed)
+        state+=$cb_on
+        shift
+        ;;
+      -o|--opened)
+        state+=$cb
+        shift
+        ;;
+      *)
+        file="$i"
+        shift
+      ;;
+    esac
+  done
+
+  if [ ${#state[@]} -eq 0 ]; then
+    state=($cb_on $cb)
+  fi
+
+
+  local pattern=$(mkstring $state -d='\|')
+  if [[ -n $task  ]]; then
+    pattern="\(${pattern}\)${anychar}$cont_left${anychar}${task}${anychar}$cont_left"
+  fi
+
+  find_line $file $pattern
+}
+
 function todo_state(){
   local file
   local task
@@ -214,6 +201,24 @@ function todo_state(){
   done
 }
 
+function todo_add(){
+  local file=$1
+  local group=$2
+  local text=$3
+  local id=$(short_id)
+  local full_id=$(_make_path $group $id)
+  local result="$cb $full_id $text"
+
+  if newline_at_eof $file; then
+    echo $result >> $file
+  else
+    echo -n $result >> $file
+    echo "" >> $file
+  fi
+
+  echo $id
+}
+
 function todo_add_child(){
   local file=$1
   local task=$2
@@ -239,3 +244,5 @@ function todo_add_child(){
 
   echo $id
 }
+
+
