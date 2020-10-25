@@ -200,7 +200,7 @@ function find_parents(){
   done
 }
 
-function can_close(){
+function get_opened_subtasks(){
   local file=$1
   local id=$2
   local subtree=("${(@f)$(find_subtree $file $id; echo .)}"); unset 'subtree[-1]'
@@ -208,19 +208,17 @@ function can_close(){
   local subtree_size=$((${#subtree[@]}-1))
 
   if [[ $subtree_size = 1 ]];then
-    echo $TRUE 
     return;
 
   else
     for e in ${subtree:1};do
       local state=$(_extract_state $e)
       if [[ $state = $cb ]]; then
-        echo $FALSE
-        return;
+        echo $(_extract_id $e)
+        #return;
       fi
     done
 
-    echo $TRUE
     return;
   fi 
 }
@@ -248,10 +246,11 @@ function set_state(){
       log_info $e
 
 
-  else
 
-    if [[ $(can_close $file $id) = $FALSE ]]; then
-      log_err "task [$id] can't be closed - there are opened subtasks"
+  else
+    local opened_subids=($(get_opened_subtasks $file $id))
+    if [[ ${#opened_subids[@]} > 0 ]]; then
+      log_err "task [$id] can't be closed - there are opened subtasks $(mkstring $opened_subids -l='[' -d=',' -r=']')"
       return;
     fi
 
