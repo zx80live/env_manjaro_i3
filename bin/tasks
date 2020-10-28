@@ -192,7 +192,7 @@ function todo_find(){
 
   for i in "$@"; do
     case $i in
-      -i=*)
+      -i=*|--id=*)
         todo_id="${i#*=}"
         shift
         ;;
@@ -221,12 +221,6 @@ function todo_find_parents(){
   local file=$1
   local id=$2
   local line=$(todo_find $file --id=$id)
-
-  if [[ -z $line ]]; then
-    #log_info "not foud"
-    return;
-  fi
-
 
   local full_id=$(_extract_id $line)
 
