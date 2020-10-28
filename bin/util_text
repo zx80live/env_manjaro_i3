@@ -210,10 +210,6 @@ function strregex(){
     for e in $BASH_REMATCH[@]; do
      echo $e
     done
-
-  else
-    source util_logs
-    log_info "NOT_FOUND"
   fi
 }
 
