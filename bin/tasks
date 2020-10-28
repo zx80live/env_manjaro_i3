@@ -192,11 +192,11 @@ function todo_find(){
 
   for i in "$@"; do
     case $i in
-      --id=*)
+      -i=*)
         todo_id="${i#*=}"
         shift
         ;;
-      -s|--subtree)
+      -s)
         subtree=true
         shift
         ;;
