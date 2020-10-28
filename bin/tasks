@@ -173,7 +173,7 @@ function _extract_parent_ids(){
 }
 
 ##-- API --------------------------------------------------------------------------------------------------------
-function find_by_id(){
+function todo_find(){
   local file=$1
   local id=$2
   local regex="$regex_left_brace$regex_identity\|(($regex_identity-$id)|($id))$regex_right_brace"
@@ -192,13 +192,13 @@ function find_subtree(){
 function find_parents(){
   local file=$1
   local id=$2
-  local line=$(find_by_id $file $id)
+  local line=$(todo_find $file $id)
   local full_id=$(_extract_id $line)
 
   local ids=("${(@f)$(_extract_parent_ids $full_id; echo .)}"); unset 'ids[-1]'
 
   for i in ${ids[@]};do
-    find_by_id $file $i
+    todo_find $file $i
   done
 }
 
@@ -242,7 +242,7 @@ function set_state(){
       file_replace $file $e $opened_entry
       log_info $e
     done
-      local e=$(find_by_id $file $id)
+      local e=$(todo_find $file $id)
       opened_entry=$(_set_state $e $cb)
       file_replace $file $e $opened_entry
       log_info $e
