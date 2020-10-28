@@ -3,6 +3,7 @@
 source util_files
 source util_text
 source util_collection
+source util_logs
 
 cb=''
 cb_on=''
@@ -174,17 +175,33 @@ function _extract_parent_ids(){
 
 ##-- API --------------------------------------------------------------------------------------------------------
 function todo_find(){
-  local file=$1
-  local id=$2
-  local regex="$regex_left_brace$regex_identity\|(($regex_identity-$id)|($id))$regex_right_brace"
+  local file
+  local todo_id
+  local subtree=false
 
-  grep -E $regex $file
-}
+  for i in "$@"; do
+    case $i in
+      --id=*)
+        todo_id="${i#*=}"
+        shift
+        ;;
+      -s|--subtree)
+        subtree=true
+        shift
+        ;;
+      *)
+        file="$i"
+        shift
+      ;;
+    esac
+  done
 
-function find_subtree(){
-  local file=$1
-  local id=$2
-  local regex="$regex_left_brace$regex_identity\|$regex_identity*$id$regex_identity*$regex_right_brace"
+  local regex
+  if $subtree ; then
+    regex="$regex_left_brace$regex_identity\|$regex_identity*$todo_id$regex_identity*$regex_right_brace"
+  else
+    regex="$regex_left_brace$regex_identity\|(($regex_identity-$todo_id)|($todo_id))$regex_right_brace"
+  fi
 
   grep -E $regex $file
 }
