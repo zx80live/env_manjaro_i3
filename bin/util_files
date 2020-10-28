@@ -1,0 +1,40 @@
+#! /bin/bash
+
+source util_logs
+
+function touch_dir(){
+  local dir=$1
+  if [ ! -d "$dir" ]; then
+    mkdir -p $dir
+    log_info "[$dir] has been created"
+  fi
+  return;
+}
+
+function newline_at_eof(){
+  local filename=$1
+  local isblank=$(sed -n '$p' $filename | grep -q '^$' && echo 'blank')
+  if [[ $isblank = "blank" ]] ; then
+    return 1; 
+  else
+    return 0;
+  fi
+}
+
+function file_find_line(){
+  local file=$1
+  local pattern=$2
+
+  grep -G "$pattern" $file
+}
+
+function file_replace(){
+  local file=$1
+  local target=$2
+  local replacement=$3
+
+  local es1=$(sed 's/[[/\]/\\[/g' <<<"$target")
+
+
+  sed -i -e "s/$es1/$replacement/g" $file
+}

@@ -1,6 +1,8 @@
 #! /usr/bin/env sh
 
-source utils
+source util_files
+source util_text
+source util_collection
 
 cb=''
 cb_on=''
@@ -93,7 +95,7 @@ function _extract_fields(){
   local line=$1
   local regex_line="($regex_level)\s*($regex_state)\s*(\~*$regex_left_brace($regex_identity)\|($regex_identity)$regex_right_brace(.*))"
 
-  local arr=("${(@f)$(extract_regex_groups $1 $regex_line; echo .)}"); unset 'arr[-1]'
+  local arr=("${(@f)$(strregex $1 $regex_line; echo .)}"); unset 'arr[-1]'
 
   # if level does not exist
   if [[ ${#arr[@]} = 7 ]]; then
@@ -102,10 +104,10 @@ function _extract_fields(){
 
   local parsed_level=${arr[2]}
   local parsed_state=${arr[3]}
-  local parsed_body=$(unwrap_line ${arr[4]} '\~' '\~')
+  local parsed_body=$(strunwrap ${arr[4]} '\~' '\~')
   local parsed_group=${arr[5]}
   local parsed_id=${arr[6]}
-  local parsed_text=$(unwrap_line ${arr[7]} '\~' '\~')
+  local parsed_text=$(strunwrap ${arr[7]} '\~' '\~')
   local fields=(
           $parsed_level
           $parsed_state
@@ -152,7 +154,7 @@ function _extract_text(){
 function _extract_parent_id(){
   local id=$1
   local regex="(.*)-[a-z0-9]+$"
-  local fields=("${(@f)$(extract_regex_groups $1 $regex; echo .)}"); unset 'fields[-1]'
+  local fields=("${(@f)$(strregex $1 $regex; echo .)}"); unset 'fields[-1]'
 
   echo ${fields[2]}
 }
@@ -237,12 +239,12 @@ function set_state(){
     local parents=("${(@f)$(find_parents $file $id; echo .)}"); unset 'parents[-1]'
     for e in ${parents[@]}; do
       local opened_entry=$(_set_state $e $cb)
-      replace_in_file $file $e $opened_entry
+      file_replace $file $e $opened_entry
       log_info $e
     done
       local e=$(find_by_id $file $id)
       opened_entry=$(_set_state $e $cb)
-      replace_in_file $file $e $opened_entry
+      file_replace $file $e $opened_entry
       log_info $e
 
 
@@ -257,7 +259,7 @@ function set_state(){
     local subtree=("${(@f)$(find_subtree $file $id; echo .)}"); unset 'subtree[-1]'
     for e in ${subtree[@]}; do
       local closed_entry=$(_set_state $e $cb_on)
-      replace_in_file $file $e $closed_entry
+      file_replace $file $e $closed_entry
     done
 
   fi
@@ -350,7 +352,7 @@ function todo_state(){
     fi
 
     
-    replace_in_file $file $e $result
+    file_replace $file $e $result
   done
 }
 
@@ -395,7 +397,7 @@ function todo_add_child(){
   local child="${line}\n${parent_level}··$cb $full_id $text"
   
 
-  replace_in_file $file $line $child
+  file_replace $file $line $child
 
   echo $id
 }

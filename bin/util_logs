@@ -1,0 +1,7 @@
+#! /bin/bash
+
+source util_text
+
+function log_info() { strformat "[INFO] $1" DARK_GREY; return; }
+
+function log_err()  { strformat "[ERROR] $1" RED;  return; }
