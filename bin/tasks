@@ -206,16 +206,16 @@ function todo_find(){
   grep -E $regex $file
 }
 
-function find_parents(){
+function todo_find_parents(){
   local file=$1
   local id=$2
-  local line=$(todo_find $file $id)
+  local line=$(todo_find $file --id=$id)
   local full_id=$(_extract_id $line)
 
   local ids=("${(@f)$(_extract_parent_ids $full_id; echo .)}"); unset 'ids[-1]'
 
   for i in ${ids[@]};do
-    todo_find $file $i
+    todo_find $file --id=$i
   done
 }
 
@@ -253,7 +253,7 @@ function set_state(){
   fi
 
   if [ $state = $cb ]; then
-    local parents=("${(@f)$(find_parents $file $id; echo .)}"); unset 'parents[-1]'
+    local parents=("${(@f)$(todo_find_parents $file $id; echo .)}"); unset 'parents[-1]'
     for e in ${parents[@]}; do
       local opened_entry=$(_set_state $e $cb)
       file_replace $file $e $opened_entry
