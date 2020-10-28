@@ -236,3 +236,23 @@ function strunwrap(){
 
   echo ${fields2[2]} | rev
 }
+
+function strtake_left(){
+  local str=$1
+  local n=$2
+  local len=${#str}
+  local offset=$(($len-$n))
+  local result=$(strdrop_right $str $offset)
+
+  echo $result
+}
+
+function strtake_right(){
+  local str=$1
+  local n=$2
+  local len=${#str}
+  local offset=$(($len-$n))
+  local result=$(strdrop_left $str $offset)
+
+  echo $result
+}
