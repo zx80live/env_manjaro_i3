@@ -2,7 +2,7 @@
 
 source util_files
 source util_text
-source util_collection
+source util_collections
 source util_logs
 
 cb=''
@@ -152,25 +152,36 @@ function _extract_text(){
   echo $(_extract_field $1 $IDX_TEXT) 
 }
 
-function _extract_parent_id(){
-  local id=$1
-  local regex="(.*)-[a-z0-9]+$"
-  local fields=("${(@f)$(strregex $1 $regex; echo .)}"); unset 'fields[-1]'
-
-  echo ${fields[2]}
+function _split_id(){
+  strsplit $1 '-'
 }
 
 function _extract_parent_ids(){
-  local current_id=$1
-  local ids=()
+  local id=$1
+  local ids=("${(@f)$(_split_id $id; echo .)}"); unset 'ids[-1]'
+  local len=${#ids[@]}
+  local to=$(($len-2))
 
-  while [ -n "$current_id" ]; do
-    current_id=$(_extract_parent_id $current_id)
-    local len=${#current_id}
-    if [[ $len > 0 ]]; then
-      echo $current_id
-    fi
+  for i in ${ids:0:$to}; do
+    echo $i
   done
+}
+
+function _extract_parent_id(){
+  local id=$1
+  local parent_ids=("${(@f)$(_extract_parent_ids $id; echo .)}"); unset 'parent_ids[-1]'
+  local parent_id=$(mkstring $parent_ids -d='-')
+
+  echo $parent_id
+}
+
+
+function _extract_tail_id(){
+  local id=$1
+  local ids=("${(@f)$(_split_id $id; echo .)}"); unset 'ids[-1]'
+  local len=${#ids[@]}
+  
+  echo "${ids[$(($len-1))]}"
 }
 
 ##-- API --------------------------------------------------------------------------------------------------------
