@@ -1,0 +1,24 @@
+#! /bin/bash
+WORKLOGS_ROOT="/home/temp/doc/worklogs"
+
+source util_files
+source util_date
+source tasks
+
+## --- utils -----------------------------------------------------------------------
+function _worklog_root(){
+  local tag=$1
+  echo "$WORKLOGS_ROOT/$tag"
+}
+
+function _worklog_current_file(){
+  local tag=$1
+  echo "$(_worklog_root $tag)/${tag}-$(current_datestamp).md" 
+}
+
+
+## --- API -------------------------------------------------------------------------
+function touch_worklog(){
+  local tag=$1
+  touch_file $(_worklog_current_file $tag)
+}
