@@ -763,3 +763,11 @@ $ unar archive.tar
 ```
 
 
+
+#### Issues
+
+Q: Some key bindings aren't working (for example - `win`+`F2` etc)
+
+A: Check and enable `FnLock` (`Fn`+`Esc`)
+
+###### 
