@@ -24,7 +24,3 @@ function current_datestamp(){
 
   echo `date +%Y$delim%m$delim%d`
 }
-
-function simple_date(){
-  echo `date +%Y.%m.%d`
-}
