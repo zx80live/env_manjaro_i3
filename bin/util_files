@@ -11,6 +11,19 @@ function touch_dir(){
   return;
 }
 
+function touch_file(){
+  local file=$1
+  if [ ! -f "$file" ]; then
+  
+    touch_dir $(dirname $file)
+    touch $file
+
+    log_info "[$file] has been created"
+  fi
+  return;
+}
+
+
 function newline_at_eof(){
   local filename=$1
   local isblank=$(sed -n '$p' $filename | grep -q '^$' && echo 'blank')
