@@ -24,9 +24,9 @@ function map(){
 
 function mkstring(){
   local arr=()
-  local delim
-  local left
-  local right
+  local delim=""
+  local left=""
+  local right=""
 
   for i in "$@"; do
     case $i in
@@ -49,15 +49,30 @@ function mkstring(){
     esac
   done
 
+  # space delimiter workaround
+  local TMP_DELIMITER='<TMP_DELIMITER>'
+  if [ -z $delim ]; then
+    if [[ ${#delim} > 0 ]]; then
+      delim=$TMP_DELIMITER
+    fi
+  fi
+
   local str=""
   for e in $arr; do
-    str="${e}${delim}${str}"
+    str="${str}${e}${delim}"
   done
 
-  local delim_length=$(strlen $delim)
+  # cut last delimiter in the tail position
+  local delim_length=${#delim}
   str=$(strdrop_right "$str" $delim_length)
- 
-  echo $(strdecorate $str $left $right)
+
+  # remove temporary delimiter if it is presented
+  if [ $delim = $TMP_DELIMITER ]; then
+    str=$(echo $str | sed 's/'$TMP_DELIMITER'/ /g') 
+  fi
+  
+  local decorated="$left${str}$right"
+  echo $decorated
 }
 
 
