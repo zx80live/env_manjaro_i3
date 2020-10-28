@@ -256,3 +256,18 @@ function strtake_right(){
 
   echo $result
 }
+
+function strsplit(){
+  local str=$1
+  local delim=$2
+  
+  local IFS=$delim
+  if [ $ZSH_VERSION ]; then
+    setopt sh_word_split
+  fi
+
+  for e in $str; do
+    echo $e
+  done
+
+}
