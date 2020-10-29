@@ -192,7 +192,7 @@ function todo_find(){
 
   for i in "$@"; do
     case $i in
-      -i=*|--id=*)
+      -i=*|-id=*)
         todo_id="${i#*=}"
         shift
         ;;
@@ -220,14 +220,14 @@ function todo_find(){
 function todo_find_parents(){
   local file=$1
   local id=$2
-  local line=$(todo_find $file --id=$id)
+  local line=$(todo_find $file -id=$id)
 
   local full_id=$(_extract_id $line)
 
   local ids=("${(@f)$(_extract_parent_ids $full_id; echo .)}"); unset 'ids[-1]'
 
   for i in ${ids[@]};do
-    todo_find $file --id=$i
+    todo_find $file -id=$i
   done
 }
 
@@ -236,6 +236,7 @@ function todo_find_parents(){
 #  - [open]  -> [[node.open, parents.open], subtree.open] [force]
 #  - [close] -> [node.checked.close]
 #  - [close] -> [node.close, subtree.close] [force]
+# TODO test todo_set_state current.md -i=0yn -s=1
 function todo_set_state(){
   local file
   local id
@@ -263,26 +264,52 @@ function todo_set_state(){
     esac
   done
 
+
+  local nodes=()
+
   if [ $state = $cb ]; then
-    ## --- open ------------------------------------------------------
-
+    ## ---- open ------------------------------------------------------
+    local parents=("${(@f)$(todo_find_parents $file $id; echo .)}"); unset 'parents[-1]'
     if [ $force = true ]; then
-      log_info "open force"
+      ## -- open force
+      local subtree=("${(@f)$(todo_find $file -id=$id -s; echo .)}"); unset 'subtree[-1]'
+      nodes+=("${subtree[@]}" "${parents[@]}")
     else
-      log_info "open"
+      ## -- open
+      local node=$(todo_find $file -id=$id)
+      nodes=($node "${parents[@]}")
     fi
-
 
   else
-    ## --- close -----------------------------------------------------
-
+    ## ---- close -----------------------------------------------------
+    local subtree=("${(@f)$(todo_find $file -id=$id -s; echo .)}"); unset 'subtree[-1]'
     if [ $force = true ]; then
-      log_info "close force"
+      ## -- close force
+      nodes+=("${subtree[@]}")
     else
-      log_info "close"
-    fi
+      ## -- close
+      ### - validate
+      local opened=()
+      for n in $subtree; do
+        local child_id=$(_extract_id $n)
+        local child_tail_id=$(_extract_tail_id $child_id)
+        local child_state=$(_extract_state $n)
 
+        if [ $child_state = $cb ] && [ $child_tail_id != $id  ]; then
+          opened+=($child_tail_id)
+        fi
+      done
+
+      if [[ ${#opened[@]} > 0 ]]; then
+        log_err "[$id] can't be closed - there are opened subtasks $(mkstring $opened -l='[' -d=',' -r=']')"
+        return;
+      fi
+    fi
   fi
+
+  for n in $nodes; do
+    log_info "set $state for $n"
+  done
 
 }
 
