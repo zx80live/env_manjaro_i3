@@ -231,6 +231,61 @@ function todo_find_parents(){
   done
 }
 
+# mode: 
+#  - [open]  -> [node.open, parents.open]
+#  - [open]  -> [[node.open, parents.open], subtree.open] [force]
+#  - [close] -> [node.checked.close]
+#  - [close] -> [node.close, subtree.close] [force]
+function todo_set_state(){
+  local file
+  local id
+  local state
+  local force=false
+
+  for i in "$@"; do
+    case $i in
+      -i=*|-id=*)
+        id="${i#*=}"
+        shift
+        ;;
+      -s=*|-state=*)
+        state=$(_to_state "${i#*=}")
+        shift
+        ;;
+      -f|-force)
+        force=true
+        shift
+        ;;
+      *)
+        file="$i"
+        shift
+      ;;
+    esac
+  done
+
+  if [ $state = $cb ]; then
+    ## --- open ------------------------------------------------------
+
+    if [ $force = true ]; then
+      log_info "open force"
+    else
+      log_info "open"
+    fi
+
+
+  else
+    ## --- close -----------------------------------------------------
+
+    if [ $force = true ]; then
+      log_info "close force"
+    else
+      log_info "close"
+    fi
+
+  fi
+
+}
+
 #@deprecated
 function get_opened_subtasks(){
   local file=$1
