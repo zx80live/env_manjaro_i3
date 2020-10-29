@@ -1,5 +1,7 @@
 #! /usr/bin/env sh
 
+# TODO date|time section
+
 source util_files
 source util_text
 source util_collections
@@ -7,6 +9,9 @@ source util_logs
 
 cb=''
 cb_on=''
+STATE_OPENED="open"
+STATE_CLOSED="close"
+STATE_ALL="all"
 left_brace='`'
 right_brace=$cont_left
 group_delimiter='|'
@@ -320,3 +325,23 @@ function todo_set_state(){
 
 }
 
+# mode
+#  - all
+#  - opened roots without childs
+#  - opened roots with opened childs
+#  - opened roots with opened/closed childs
+#  - closed roots without childs
+#  - closed roots with closed childs
+function todo_list(){
+  local file
+  local states=()
+
+  for i in "$@"; do
+    case $i in
+      *)
+        file="$i"
+        shift
+      ;;
+    esac
+  done
+}
