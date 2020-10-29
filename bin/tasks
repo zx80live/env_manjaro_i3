@@ -236,7 +236,6 @@ function todo_find_parents(){
 #  - [open]  -> [[node.open, parents.open], subtree.open] [force]
 #  - [close] -> [node.checked.close]
 #  - [close] -> [node.close, subtree.close] [force]
-# TODO test todo_set_state current.md -i=0yn -s=1
 function todo_set_state(){
   local file
   local id
@@ -289,11 +288,16 @@ function todo_set_state(){
     else
       ## -- close
       ### - validate
+      local current_node
       local opened=()
       for n in $subtree; do
         local child_id=$(_extract_id $n)
         local child_tail_id=$(_extract_tail_id $child_id)
         local child_state=$(_extract_state $n)
+
+        if [ $child_tail_id = $id ]; then
+          current_node=$n
+        fi
 
         if [ $child_state = $cb ] && [ $child_tail_id != $id  ]; then
           opened+=($child_tail_id)
@@ -304,11 +308,14 @@ function todo_set_state(){
         log_err "[$id] can't be closed - there are opened subtasks $(mkstring $opened -l='[' -d=',' -r=']')"
         return;
       fi
+
+      nodes+=($current_node)
     fi
   fi
 
-  for n in $nodes; do
-    log_info "set $state for $n"
+  for n in $nodes[@]; do
+    local modified=$(_set_state $n $state)
+    file_replace $file $n $modified
   done
 
 }
