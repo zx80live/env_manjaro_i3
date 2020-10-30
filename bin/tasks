@@ -376,6 +376,14 @@ function todo_list(){
     esac
   done
 
+
+  log_debug "file=$file"
+  log_debug "open=$open"
+  log_debug "close=$close"
+  log_debug "subtree=$subtree"
+  log_debug "all=$all"
+  log_debug "format=$format"
+
   #------- detect mode
   local nodes
   local regex
@@ -383,13 +391,13 @@ function todo_list(){
 
     ## --- open -----------------------------------------------
     if ([ $subtree ] && [ $all ]) || [ $all ]; then
-      log_info "opened roots with opened/closed childs"
+      log_debug "opened roots with opened/closed childs"
       regex="(^$cb)|(^($regex_level_one_or_more)($regex_state))"
     elif [ $subtree ]; then
-      log_info "opened roots with opened childs"
+      log_debug "opened roots with opened childs"
       regex="^($regex_level)($cb)"
     else
-      log_info "opened roots"
+      log_debug "opened roots"
       regex="^$cb"
     fi
 
@@ -397,10 +405,10 @@ function todo_list(){
 
     ## --- close ----------------------------------------------
     if [ $subtree ]; then
-      log_info "closed roots with closed subtrees"
+      log_debug "closed roots with closed subtrees"
       regex="^($regex_level)($cb_on)"
     else
-      log_info "closed roots without subtrees" 
+      log_debug "closed roots without subtrees" 
       regex="^($cb_on)"
     fi
 
@@ -408,10 +416,10 @@ function todo_list(){
 
     ## --- all ------------------------------------------------
     if [ $subtree ]; then
-      log_info "all roots with all subtrees"
+      log_debug "all roots with all subtrees"
       regex="^($regex_level)($regex_state)"
     else
-      log_info "all roots"
+      log_debug "all roots"
       regex="^($regex_state)"
     fi
   fi
