@@ -23,6 +23,7 @@ FALSE=0
 
 regex_state="$cb|$cb_on"
 regex_level='[·]*'
+regex_level_one_or_more='[·]+'
 regex_left_brace='`'
 regex_right_brace='`'
 regex_group_delimiter='\|'
@@ -366,35 +367,46 @@ function todo_list(){
   done
 
   #------- detect mode
+  local nodes
+  local regex
   if [ $open ] && [ ! $close ]; then
-    ## --- open -----------------------------------------------
-    log_info "OPEN_SECTION"
 
+    ## --- open -----------------------------------------------
     if ([ $subtree ] && [ $all ]) || [ $all ]; then
       log_info "opened roots with opened/closed childs"
+      regex="(^$cb)|(^($regex_level_one_or_more)($regex_state))"
     elif [ $subtree ]; then
       log_info "opened roots with opened childs"
+      regex="^($regex_level)($cb)"
     else
       log_info "opened roots"
+      regex="^$cb"
     fi
 
   elif [ ! $open ] && [ $close  ]; then
-    ## --- close ----------------------------------------------
-    log_info "CLOSE_SECTION"
 
+    ## --- close ----------------------------------------------
     if [ $subtree ]; then
-      log_info "closed roots with closed childs"
+      log_info "closed roots with closed subtrees"
+      regex="^($regex_level)($cb_on)"
     else
-      log_info "closed roots without childs" 
+      log_info "closed roots without subtrees" 
+      regex="^($cb_on)"
     fi
 
   else
+
     ## --- all ------------------------------------------------
-    log_info "ALL_SECTION"
     if [ $subtree ]; then
       log_info "all roots with all subtrees"
+      regex="^($regex_level)($regex_state)"
     else
       log_info "all roots"
+      regex="^($regex_state)"
     fi
   fi
+
+
+  log_info $regex
+  grep -E $regex $file
 }
