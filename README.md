@@ -711,6 +711,46 @@ $ rsync -r /dir1/ /dir2/
 
 #### How-to
 
+###### Vim keys
+Copy entire word under cursor
+```
+byw
+```
+
+Delete selected block
+```
+Ctrl+v 🠖 <select block>
+x
+```
+
+Fill selected block
+
+```
+Ctrl+v  🠖 <select block>
+Shift+i 🠖 <enter symbol>
+Esc
+```
+
+Comment lines in bash syntax
+
+```
+Ctrl+v  🠖 <select column which will contain comments>
+Shift+i
+#
+Esc
+```
+
+Uncomment lines in bash syntax
+
+```
+Ctrl+v  🠖 <select column which contains comment symbols '#'>
+x
+```
+
+
+
+
+
 ###### Sync local folders
 
 ```bash
