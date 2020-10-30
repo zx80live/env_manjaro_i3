@@ -327,21 +327,74 @@ function todo_set_state(){
 
 # mode
 #  - all
-#  - opened roots without childs
-#  - opened roots with opened childs
-#  - opened roots with opened/closed childs
-#  - closed roots without childs
-#  - closed roots with closed childs
+#  - opened roots without childs                    -open
+#  - opened roots with opened childs                -open  -subtree
+#  - opened roots with opened/closed childs         -open  -subtree -all
+#  - closed roots without childs                    -close 
+#  - closed roots with closed childs                -close -subtree
 function todo_list(){
   local file
-  local states=()
+  local open
+  local close
+  local subtree
+  local all
 
+  #-- parse args
   for i in "$@"; do
     case $i in
+      -o|-open)
+        open=true
+        shift
+        ;;
+      -c|-close)
+        close=true
+        shift
+        ;;
+      -s|-subtree)
+        subtree=true
+        shift
+        ;;
+      -a|-all)
+        all=true
+        shift
+        ;;
       *)
         file="$i"
         shift
       ;;
     esac
   done
+
+  #------- detect mode
+  if [ $open ] && [ ! $close ]; then
+    ## --- open -----------------------------------------------
+    log_info "OPEN_SECTION"
+
+    if ([ $subtree ] && [ $all ]) || [ $all ]; then
+      log_info "opened roots with opened/closed childs"
+    elif [ $subtree ]; then
+      log_info "opened roots with opened childs"
+    else
+      log_info "opened roots"
+    fi
+
+  elif [ ! $open ] && [ $close  ]; then
+    ## --- close ----------------------------------------------
+    log_info "CLOSE_SECTION"
+
+    if [ $subtree ]; then
+      log_info "closed roots with closed childs"
+    else
+      log_info "closed roots without childs" 
+    fi
+
+  else
+    ## --- all ------------------------------------------------
+    log_info "ALL_SECTION"
+    if [ $subtree ]; then
+      log_info "all roots with all subtrees"
+    else
+      log_info "all roots"
+    fi
+  fi
 }
