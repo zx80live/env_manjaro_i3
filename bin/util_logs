@@ -15,7 +15,7 @@ function _log(){
   if (( $level <= $log_level)); then
     echo $text
   else
-    echo "log disabled"
+    #echo "log disabled, current log level is [$log_level]"
   fi
 }
 
