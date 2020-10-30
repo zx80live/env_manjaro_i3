@@ -468,4 +468,20 @@ function todo_add(){
   log_debug "group=$group"
   log_debug "text=$text"
 
+  if [ -z $parent_id ]; then
+
+    log_debug "add root"
+
+  else
+
+    local parent_node=$(todo_find $file -i=$parent_id)
+
+    if [ -z $parent_node ]; then
+      log_debug "parent [$parent_id] not found -> add root"
+    else
+      log_debug "add child to [$parent_node]"
+      log_debug "set parents as opened"
+    fi
+
+  fi
 }
