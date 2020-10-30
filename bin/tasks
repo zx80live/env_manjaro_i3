@@ -434,3 +434,38 @@ function todo_list(){
     _make_line $node_level $node_state $node_body $format
   done
 }
+
+function todo_add(){
+  local file
+  local group
+  local text
+  local parent_id
+
+  #-- parse args
+  for i in "$@"; do
+    case $i in
+      -t=*|-text=*)
+        text="${i#*=}"
+        shift
+        ;;
+      -g=*|-group=*)
+        group="${i#*=}"
+        shift
+        ;;
+      -i=*|-id=*)
+        parent_id="${i#*=}"
+        shift
+        ;;
+      *)
+        file="$i" 
+        shift
+      ;;
+    esac
+  done
+
+  log_debug "file=$file"
+  log_debug "parent_id=$parent_id"
+  log_debug "group=$group"
+  log_debug "text=$text"
+
+}
