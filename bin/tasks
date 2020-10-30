@@ -66,13 +66,18 @@ function _make_line(){
   local level=$1
   local state=$2
   local body=$3
+  local format=$4
  
   if [[ $level = $NONE ]]; then
     level=""
   fi
 
   if [[ $state = $cb_on ]]; then
-    body="~~$body~~"
+    if [[ -n $format ]] && [ $format = "console" ]; then
+      body=$(strformat $body STRIKE)
+    else
+      body="~~$body~~"
+    fi
   fi
 
   local line="$level$state $body"
@@ -339,6 +344,7 @@ function todo_list(){
   local close
   local subtree
   local all
+  local format
 
   #-- parse args
   for i in "$@"; do
@@ -359,8 +365,12 @@ function todo_list(){
         all=true
         shift
         ;;
+      -f=*|-format=*)
+        format="${i#*=}"
+        shift
+        ;;
       *)
-        file="$i"
+        file="$i" 
         shift
       ;;
     esac
@@ -406,7 +416,13 @@ function todo_list(){
     fi
   fi
 
+  local nodes=("${(@f)$(grep -E $regex $file; echo .)}"); unset 'nodes[-1]'
 
-  log_info $regex
-  grep -E $regex $file
+  for n in $nodes; do
+    local node_level=$(_extract_level $n)
+    local node_state=$(_extract_state $n)
+    local node_body=$(_extract_body $n)
+
+    _make_line $node_level $node_state $node_body $format
+  done
 }
