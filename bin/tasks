@@ -37,6 +37,7 @@ IDX_GROUP=4
 IDX_ID=5
 IDX_TEXT=6
 
+DEFAULT_GROUP="main"
 
 ##-- builders ---------------------------------------------------------------------------------------------------
 function _to_state(){
@@ -468,6 +469,11 @@ function todo_add(){
   log_debug "parent_id=$parent_id"
   log_debug "group=$group"
   log_debug "text=$text"
+
+
+  if [ -z $group ] || [[ ${#group} = 0 ]]; then
+    group=$DEFAULT_GROUP
+  fi
 
 
   local node_level=""
