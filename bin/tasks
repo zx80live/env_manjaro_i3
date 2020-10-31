@@ -6,6 +6,7 @@ source util_files
 source util_text
 source util_collections
 source util_logs
+source util_random
 
 cb=''
 cb_on=''
@@ -13,9 +14,9 @@ STATE_OPENED="open"
 STATE_CLOSED="close"
 STATE_ALL="all"
 left_brace='`'
-right_brace=$cont_left
+right_brace=$left_brace
 group_delimiter='|'
-child_level='·'
+child_level='··'
 NONE='NONE'
 
 TRUE=1
@@ -80,7 +81,7 @@ function _make_line(){
     fi
   fi
 
-  local line="$level$state $body"
+  local line="${level}${state} ${body}"
   echo $line
 }
 
@@ -468,20 +469,54 @@ function todo_add(){
   log_debug "group=$group"
   log_debug "text=$text"
 
+
+  local node_level=""
+  local node_state=$cb
+  local id=$(randomstr)
+  local node_body
+  local node
+
   if [ -z $parent_id ]; then
 
     log_debug "add root"
+    node_body=$(_make_body $group $id $text) 
+    node=$(_make_line $node_level $node_state $node_body)
 
+    echo $node >> $file
   else
 
     local parent_node=$(todo_find $file -i=$parent_id)
 
     if [ -z $parent_node ]; then
       log_debug "parent [$parent_id] not found -> add root"
+      
+      node_body=$(_make_body $group $id $text) 
+      node=$(_make_line $node_level $node_state $node_body)
+
+      echo $node >> $file
+
     else
-      log_debug "add child to [$parent_node]"
+      local full_parent_id=$(_extract_id $parent_node)
+      local parent_level=$(_extract_level $parent_node)
+      if [ $parent_level = $NONE ]; then
+        parent_level=""
+      fi
+      id="$full_parent_id-$id"
+      node_body=$(_make_body $group $id $text) 
+      node_level="$parent_level$child_level"
+      node=$(_make_line $node_level $node_state $node_body)
+
+      log_debug "add child [$id] to [$parent_node]"
+      local replacement="${parent_node}\n${node}"
+
+      file_replace $file $parent_node $replacement
+
       log_debug "set parents as opened"
+      todo_set_state $file -i=$id -s=0
+
     fi
 
   fi
+  
+  log_debug "node=$node"
 }
