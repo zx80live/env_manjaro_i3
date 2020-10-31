@@ -525,4 +525,5 @@ function todo_add(){
   fi
   
   log_debug "node=$node"
+  echo $(_extract_tail_id $id)
 }
