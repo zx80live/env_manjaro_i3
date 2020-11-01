@@ -34,12 +34,17 @@ func main() {
     fmt.Println(e)
   }
 
-  l1 := Cons(0,1,2,3,4,5,6,7,8,9,10,11,12).Map(func(e Any) Any {
+  l1 := Cons(0,1,2,3,4,5,6,7,8,9,10,11,12, 13,14).Map(func(e Any) Any {
     time.Sleep(1 * time.Nanosecond)
     return e
   })
-  l2 := Cons("t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8", "t9", "t10", "t11", "t12").Map(func(e Any) Any {
+  l2 := Cons("t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8", "t9", "t10", "t11", "t12", "t13").Map(func(e Any) Any {
     time.Sleep(5000 * time.Nanosecond)
+    return e
+  })
+
+  l3 := Cons("eet0", "eet1", "eet2", "eet3", "eet4", "eet5", "eet6", "eet7", "eet8", "eet9", "eet10", "eet11", "eet12", "eet13").Map(func(e Any) Any {
+    time.Sleep(5 * time.Nanosecond)
     return e
   })
 
@@ -47,8 +52,8 @@ func main() {
 //  l2.Foreach(logger)
   fmt.Println("---")
 
- l3 := l1.Zip(l2)
- l3.Foreach(logger)
+ l4 := l1.Zip(l2).Zip(l3)
+ l4.Foreach(logger)
 // res := l1.Fold(0, func(e Any, acc Any) Any {
 //   newAcc := e.(int) + acc.(int)
 //   return newAcc 
