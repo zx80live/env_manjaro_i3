@@ -34,12 +34,12 @@ func main() {
     fmt.Println(e)
   }
 
-  l1 := Cons(0,1,2,3,4,5).Map(func(e Any) Any {
+  l1 := Cons(0,1,2,3,4,5,6,7,8,9,10,11,12).Map(func(e Any) Any {
     time.Sleep(1 * time.Nanosecond)
     return e
   })
-  l2 := Cons("zero", "one", "two", "three", "four", "five").Map(func(e Any) Any {
-    time.Sleep(2 * time.Nanosecond)
+  l2 := Cons("t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8", "t9", "t10", "t11", "t12").Map(func(e Any) Any {
+    time.Sleep(5000 * time.Nanosecond)
     return e
   })
 

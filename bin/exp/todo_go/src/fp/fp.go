@@ -147,14 +147,17 @@ func (m1 Monad) Zip(m2 Monad) Monad {
   fmt.Println("invoke Zip")
 
   c := make(Monad)
+  tmp := make(Monad)
 
-  guard := 30
-
-  z1 := m1.ZipWithIndex()
-  z2 := m2.ZipWithIndex()
 
   go func(){
+    defer close(tmp)
     defer close(c)
+
+    guard := 100000
+
+    z1 := m1.ZipWithIndex()
+    z2 := m2.ZipWithIndex()
 
     for {
       var t1 Tuple2
@@ -162,27 +165,16 @@ func (m1 Monad) Zip(m2 Monad) Monad {
 
       select {
       case e1:=<-z1:
-
         if e1 != nil {
           t1 = e1.(Tuple2)
-          //fmt.Println("from m1: ", t1._1, t1._2)
-          //c <- e1
-        } else {
-          //fmt.Println("m1 is exosted")
+          tmp <- t1
         }
-
       case e2:=<-z2:
         if e2 != nil {
           t2 = e2.(Tuple2)
-          //fmt.Println("from m2: ", t2._1, t2._2)
-          //c <- e2
-        } else {
-          //fmt.Println("m2 is exosted")
+          tmp <- t2
         }
       }
-
-      //fmt.Println(" ******* ", t1, t2)
-      c <- Tuple2 { t1, t2 }
 
       guard = guard - 1
 
@@ -192,6 +184,23 @@ func (m1 Monad) Zip(m2 Monad) Monad {
     }
 
 
+  }()
+
+  go func() {
+    tmp.Fold(make(map[int]Any), func(e Any, acc Any) Any {
+      el := e.(Tuple2)
+      key := el._1.(int)
+      cache := acc.(map[int]Any)
+
+      if cached, found := cache[key]; found {
+        c <- Tuple2 { cached, el._2 }
+        delete(cache, key)
+      } else {
+        cache[key] = el._2
+      }
+
+      return cache
+    })
   }()
 
   return c
