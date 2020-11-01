@@ -30,14 +30,9 @@ func main() {
    return pattern.Match([]byte(line.(string)))
  }
 
- lines := FileLines("/home/temp/doc/worklog/current.md")
-// lines.
-//   Filter(TodoSelector).
-//   Foreach(func(line Any) {
-//     fmt.Println("> " + line.(string))
-//   })
-
-  fmt.Println(lines.Filter(TodoSelector).Count(func(line Any) bool{
-    return true
-  }))
+ FileLines("/home/temp/doc/worklog/current.md").
+   Filter(TodoSelector).
+   Foreach(func(e Any) {
+     fmt.Println("> " + e.(string))
+   })
 }
