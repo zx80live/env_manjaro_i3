@@ -9,6 +9,7 @@ type Traversable = Monad
 
 func Cons(elements ... Any) Monad {
   c := make(Monad)
+
   go func () {
     defer close(c)
     for _, e := range elements {
@@ -27,6 +28,7 @@ func (m Monad) Foreach(fn func(Any)) {
 
 func (m Monad) Map(fn Functor) Monad {
   c := make(Monad)
+
   go func() {
     defer close(c)
     for e := range m {
