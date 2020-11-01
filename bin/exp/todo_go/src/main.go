@@ -2,7 +2,7 @@ package main
 
 import (
   "fmt"
-  . "fp"
+  . "todo_go/src/fp"
 )
 
 
@@ -14,6 +14,7 @@ func main() {
   })
 
   result.Foreach(func(e Any){
-    fmt.Println(e)
+    fmt.Println(-e.(int))
   })
+
 }
