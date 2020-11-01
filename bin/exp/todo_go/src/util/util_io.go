@@ -9,7 +9,8 @@ func FileLines(filename string) Monad {
   c := make(Monad)
 
   go func(){
-  defer close(c)
+    defer close(c)
+
     file, err := os.Open(filename)
     defer file.Close()
 
