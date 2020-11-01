@@ -57,3 +57,15 @@ func (m Monad) FilterNot(p Predicate) Monad {
   }
   return m.Filter(notP)
 }
+
+func (m Monad) Exists(p Predicate) bool {
+  exist := false
+  for e := range m {
+    if p(e) {
+      exist = true
+      break
+    }
+  }
+
+  return exist
+}
