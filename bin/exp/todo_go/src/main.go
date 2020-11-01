@@ -19,10 +19,13 @@ func main() {
   TodoSelector := func(line Any) bool {
     return pattern.Match([]byte(line.(string)))
   }
+  fmt.Println(TodoSelector)
  
   FileLines(filename).
     Filter(TodoSelector).
+    ZipWithIndex().
     Foreach(func(e Any) {
-      fmt.Println("> " + e.(string))
+      //t := e.(Tuple2)
+      fmt.Println(e)
     })
 }

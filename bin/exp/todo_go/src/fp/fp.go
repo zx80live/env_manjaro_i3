@@ -6,6 +6,10 @@ type Monad chan Any
 type Predicate func (Any) bool
 type Option = Monad
 type Traversable = Monad
+type Tuple2 struct {
+  _1 Any
+  _2 Any
+}
 
 func Cons(elements ... Any) Monad {
   c := make(Monad)
@@ -94,4 +98,20 @@ func (m Monad) Forall(p Predicate) bool {
   }
 
   return trues > 0 && trues == count
+}
+
+func (m Monad) ZipWithIndex() Monad {
+  c := make(Monad)
+
+  go func(){
+    defer close(c)
+    count := 0
+    for e := range m {
+      c <- Tuple2{count, e}
+      count = count + 1
+    }
+
+  }()
+
+  return c
 }
