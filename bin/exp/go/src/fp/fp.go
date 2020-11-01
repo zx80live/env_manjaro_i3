@@ -2,7 +2,7 @@ package fp
 
 type Any = interface{}
 type Functor func (Any) Any
-type Monad chan Any 
+type Monad chan Any
 type Predicate func (Any) bool
 type Option = Monad
 type Traversable = Monad
