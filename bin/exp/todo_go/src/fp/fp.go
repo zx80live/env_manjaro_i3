@@ -143,6 +143,7 @@ func (m Monad) Fold(init Any, fn func(Any, Any) Any ) Any {
   return acc
 }
 
+//TODO Option
 //TODO use lazy collections
 //TODO fix order
 func (m1 Monad) Zip(m2 Monad) Monad {
