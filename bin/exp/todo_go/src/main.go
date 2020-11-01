@@ -2,6 +2,7 @@ package main
 
 import (
   "fmt"
+  "regexp"
   . "todo_go/src/fp"
   . "todo_go/src/util"
 )
@@ -22,9 +23,15 @@ func main() {
  //   return e.(int) == 300
  // })
 
+
+ pattern := regexp.MustCompile("")
+ fmt.Println(pattern)
+
  lines := FileLines("/home/temp/doc/worklog/current.md")
- lines.Foreach(func(line Any) {
-   fmt.Println(line)
+ lines.Filter(func(line Any) bool {
+   return pattern.Match([]byte(line.(string)))
+ }).Foreach(func(line Any) {
+   fmt.Println("> " + line.(string))
  })
 
 }
