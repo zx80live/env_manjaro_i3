@@ -25,13 +25,19 @@ func main() {
 
 
  pattern := regexp.MustCompile("")
- fmt.Println(pattern)
+
+ TodoSelector := func(line Any) bool {
+   return pattern.Match([]byte(line.(string)))
+ }
 
  lines := FileLines("/home/temp/doc/worklog/current.md")
- lines.Filter(func(line Any) bool {
-   return pattern.Match([]byte(line.(string)))
- }).Foreach(func(line Any) {
-   fmt.Println("> " + line.(string))
- })
+// lines.
+//   Filter(TodoSelector).
+//   Foreach(func(line Any) {
+//     fmt.Println("> " + line.(string))
+//   })
 
+  fmt.Println(lines.Filter(TodoSelector).Count(func(line Any) bool{
+    return true
+  }))
 }

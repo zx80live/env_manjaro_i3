@@ -71,3 +71,27 @@ func (m Monad) Exists(p Predicate) bool {
 
   return exist
 }
+
+func (m Monad) Count(p Predicate) int {
+  count := 0
+
+  for range m {
+    count = count + 1
+  }
+
+  return count
+}
+
+func (m Monad) Forall(p Predicate) bool {
+  count := 0
+  trues := 0
+
+  for e := range m {
+    count = count + 1
+    if p(e) {
+      trues = trues + 1
+    }
+  }
+
+  return trues > 0 && trues == count
+}
