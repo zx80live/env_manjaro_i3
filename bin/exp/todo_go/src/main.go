@@ -34,10 +34,10 @@ func main() {
     fmt.Println(e)
   }
 
-//  l1 := Cons(0,1,2,3,4,5).Map(func(e Any) Any {
-//    time.Sleep(1 * time.Nanosecond)
-//    return e
-//  })
+  l1 := Cons(0,1,2,3,4,5).Map(func(e Any) Any {
+    time.Sleep(1 * time.Nanosecond)
+    return e
+  })
   l2 := Cons("zero", "one", "two", "three", "four", "five").Map(func(e Any) Any {
     time.Sleep(2 * time.Nanosecond)
     return e
@@ -47,17 +47,17 @@ func main() {
 //  l2.Foreach(logger)
   fmt.Println("---")
 
- // l3 := l1.Zip(l2)
- // l3.Foreach(logger)
+ l3 := l1.Zip(l2)
+ l3.Foreach(logger)
 // res := l1.Fold(0, func(e Any, acc Any) Any {
 //   newAcc := e.(int) + acc.(int)
 //   return newAcc 
 // })
-res := l2.Fold("", func(e Any, acc Any) Any {
-  return e.(string) + acc.(string)
-})
+//  res := l2.Fold("", func(e Any, acc Any) Any {
+//    return e.(string) + acc.(string)
+//  })
+//
+//   println(logger, "res=", res.(string))
 
- println(logger, "res=", res.(string))
 
-  
 }
