@@ -89,6 +89,19 @@ func (m Monad) Foreach(f func(Any)) {
   }
 }
 
+func (m Monad) ToChannel() chan Any {
+  c := make(chan Any)
+
+  go func() {
+    defer close(c)
+
+    m.Foreach(func(e Any) {
+      c <- e
+    })
+  }()
+ return c
+}
+
 func pos(e Any) bool {
   return e.(int) >= 0
 }
@@ -119,16 +132,10 @@ func main(){
   Cons(1,-2,3,-4,-5,6,-7,-8,-9,10).
     Filter(pos).
     Filter(even).
-    Map(mult100).           // e * 100
-    Map(invertor).          // -e
-    Map(decorate).          // "[$e]"
+    Map(mult100).
+    Map(invertor).
+    Map(decorate).
     Foreach(logger)
-
-    /*
-      
-      
-
-    */
+    //ToChannel()
 
 }
-
