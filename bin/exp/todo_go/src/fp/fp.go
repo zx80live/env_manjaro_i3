@@ -147,8 +147,17 @@ func (m Monad) Fold(init Any, fn func(Any, Any) Any ) Any {
 }
 
 
+func Zip22(m Monad) {
+  for {
+    fmt.Println("waiting monad elements")
+    c := <-m
+    fmt.Println("get element", c)
+  }
+}
+
 func (m1 Monad) ZipWith(m2 Monad) Monad {
   fmt.Println("invoke ZipWith")
+  time.Sleep(1 * time.Millisecond)
   
   c := make(Monad)
 
@@ -157,11 +166,10 @@ func (m1 Monad) ZipWith(m2 Monad) Monad {
     for {
       el := <-m1
       c <- el
-      time.Sleep(500 * time.Millisecond)
     }
   }()
 
-
+  fmt.Println("exit from ZipWith")
   return c
 }
 

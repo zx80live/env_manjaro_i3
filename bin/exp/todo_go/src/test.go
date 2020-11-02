@@ -14,6 +14,11 @@ type Monad struct {
   processor Processor
 }
 
+type Tuple2 struct {
+  _1 Any
+  _2 Any
+}
+
 var EmptyPredicate Predicate = func(e Any) bool { return true }
 var EmptyFunctor Functor = func(e Any) Any { return e }
 var EmptyProcessor Processor = func(e Any) Any {return e}
@@ -32,9 +37,16 @@ func (f1 Functor) Map(f2 Functor) Functor {
   return res
 }
 
-func Cons(els ... Any) Monad {
+func FSeq(els ... Any) Monad {
   return Monad {
     content: els,
+    processor: EmptyProcessor,
+  }
+}
+
+func FArray(a []Any) Monad {
+  return Monad {
+    content: a,
     processor: EmptyProcessor,
   }
 }
@@ -80,14 +92,37 @@ func (m Monad) Map(f Functor) Monad {
   return out
 }
 
+func (m Monad) ZipWithIndex() Monad {
+  i := 0
+
+  proc := func(e Any) Any {
+    processed := m.processor(e)
+    if processed == nil {
+      return nil
+    }
+    currentIdx := i
+    i = i + 1
+    return Tuple2{currentIdx, processed}
+  }
+
+  out := Monad {
+    content: m.content,
+    processor: proc,
+  }
+
+  return out
+
+}
+
 func (m Monad) Foreach(f func(Any)) {
   for _, e := range m.content {
     processed := m.processor(e)
     if processed != nil {
-      f(m.processor(e))
+      f(processed)
     }
   }
 }
+
 
 func (m Monad) ToChannel() chan Any {
   c := make(chan Any)
@@ -129,12 +164,14 @@ func even(e Any) bool {
 func main(){
   fmt.Println("main")
 
-  Cons(1,-2,3,-4,-5,6,-7,-8,-9,10).
+
+  FSeq(1,-2,3,-4,-5,6,-7,-8,-9,10, -20, -30, -40, 22, 32, 34).
     Filter(pos).
     Filter(even).
     Map(mult100).
     Map(invertor).
     Map(decorate).
+    ZipWithIndex().
     Foreach(logger)
     //ToChannel()
 
