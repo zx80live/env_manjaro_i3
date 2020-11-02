@@ -1,6 +1,9 @@
 package fp
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 type Any = interface{}
 type Functor func (Any) Any
@@ -141,6 +144,25 @@ func (m Monad) Fold(init Any, fn func(Any, Any) Any ) Any {
   }
  
   return acc
+}
+
+
+func (m1 Monad) ZipWith(m2 Monad) Monad {
+  fmt.Println("invoke ZipWith")
+  
+  c := make(Monad)
+
+  go func(){
+    defer close(c)
+    for {
+      el := <-m1
+      c <- el
+      time.Sleep(500 * time.Millisecond)
+    }
+  }()
+
+
+  return c
 }
 
 //TODO Option

@@ -43,16 +43,16 @@ func main() {
     return e
   })
 
-  l3 := Cons("eet0", "eet1", "eet2", "eet3", "eet4", "eet5", "eet6", "eet7", "eet8", "eet9", "eet10", "eet11", "eet12", "eet13").Map(func(e Any) Any {
-    time.Sleep(5 * time.Nanosecond)
-    return e
-  })
+ // l3 := Cons("eet0", "eet1", "eet2", "eet3", "eet4", "eet5", "eet6", "eet7", "eet8", "eet9", "eet10", "eet11", "eet12", "eet13").Map(func(e Any) Any {
+ //   time.Sleep(5 * time.Nanosecond)
+ //   return e
+ // })
 
  // l1.Foreach(logger)
 //  l2.Foreach(logger)
   fmt.Println("---")
 
- l4 := l1.Zip(l2).Zip(l3)
+ l4 := l1.ZipWith(l2)
  l4.Foreach(logger)
 // res := l1.Fold(0, func(e Any, acc Any) Any {
 //   newAcc := e.(int) + acc.(int)
