@@ -177,6 +177,16 @@ func (l List) Reduce(f func(Element, Accumulator) Any) Any {
   }
 }
 
+func (l List) FoldLeft(z Any, f func(Accumulator, Element) Any) Any {
+  if l.IsEmpty() {
+    return z
+  } else if l.tail.IsEmpty() {
+    return f(z, l.head)
+  } else {
+    return f(l.head, l.tail.FoldLeft(z, f))
+  }
+}
+
 
 
 /**

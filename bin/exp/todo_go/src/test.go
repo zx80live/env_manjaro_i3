@@ -72,4 +72,9 @@ func main() {
   fmt.Println("--- reduce ---")
   fmt.Println(l1.Reduce(Sum))
   fmt.Println(l2.Reduce(StrConcat))
+  fmt.Println("--- fold left ---")
+  res1 := l1.FoldLeft(1000, func(acc Any, e Any) Any {
+    return acc.(int) + e.(int)
+  })
+  fmt.Println(res1)
 }
