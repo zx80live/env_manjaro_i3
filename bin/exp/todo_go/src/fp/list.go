@@ -34,6 +34,8 @@ func (l List) Copy() List {
 
 /**
  * Add head to list
+ *
+ * O(1)
  */
 func (l List) Cons(e Any) List {
   tail := l.Copy()
@@ -86,6 +88,23 @@ func (l List) Reverse() List {
     xs = xs.Cons(e)
   })
   return xs
+}
+
+func (l1 List) Zip(l2 List) List {
+  zipped := Nil
+  it1 := &l1
+  it2 := &l2
+  for {
+    if (it1.head != nil && it2.head != nil) {
+      zipped = zipped.Cons(Tuple2 { it1.head, it2.head })
+      it1 = it1.tail
+      it2 = it2.tail
+    } else {
+      break
+    }
+  }
+
+  return zipped.Reverse()
 }
 
 /**
