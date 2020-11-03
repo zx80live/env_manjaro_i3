@@ -1,10 +1,14 @@
 package fp
 
+type Element = Any
+type Accumulator = Any
+
 type List struct {
-  head Any
+  head Element
   tail *List
   functor Functor
 }
+
 
 var Nil List = List { nil, nil, EmptyFunctor }
 
@@ -45,7 +49,7 @@ func (l List) Copy() List {
  *
  * O(1)
  */
-func (l List) Cons(e Any) List {
+func (l List) Cons(e Element) List {
   tail := l.Copy()
   xs := List {
     head: e,
@@ -63,7 +67,7 @@ func (l List) Filter(p Predicate) List {
   return List {
     head : l.head,
     tail : l.tail,
-    functor : func(e Any) Any {
+    functor : func(e Element) Element {
       if processed := l.functor(e); processed != nil && p(processed) {
           return processed
       } else {
@@ -80,7 +84,7 @@ func (l List) Map(f Functor) List {
   return List {
     head : l.head,
     tail : l.tail,
-    functor : func(e Any) Any {
+    functor : func(e Element) Element {
       if processed := l.functor(e); processed != nil {
         return f(processed)
       } else {
@@ -92,7 +96,7 @@ func (l List) Map(f Functor) List {
 
 func (l List) Reverse() List {
   xs := Nil
-  l.Foreach(func(e Any) {
+  l.Foreach(func(e Element) {
     xs = xs.Cons(e)
   })
   return xs
@@ -135,7 +139,7 @@ func (l List) ZipWithIndex() List {
 
 func (l List) Count(p Predicate) int {
   c := 0
-  l.Foreach(func(e Any) {
+  l.Foreach(func(e Element) {
     if p(e) {
       c = c + 1
     }
@@ -163,7 +167,7 @@ func (l List) Exist(p Predicate) bool {
 }
 
 //TODO optimize: get rid of head recursion
-func (l List) Reduce(f func(el Any, er Any) Any) Any {
+func (l List) Reduce(f func(Element, Accumulator) Any) Any {
   if l.IsEmpty() {
     panic("Usupport operation: reduce left on empty list")
   } else if l.tail.IsEmpty() {
@@ -174,17 +178,18 @@ func (l List) Reduce(f func(el Any, er Any) Any) Any {
 }
 
 
+
 /**
  * = O(n)
  */
 func (l List) Size() int {
-  return l.Count(func(e Any) bool {return true})
+  return l.Count(func(e Element) bool {return true})
 }
 
 /**
  * Materialize list: apply functors, filters before each element will be passed to the lambda
  */
-func (l List) Foreach(f func(Any)) {
+func (l List) Foreach(f func(Element)) {
   if l.head != nil {
     processed := l.functor(l.head)
     if processed != nil {
@@ -207,7 +212,7 @@ func (l List) mapHead(f Functor) List {
   return List {
     head: l.head,
     tail: l.tail,
-    functor : func(e Any) Any {
+    functor : func(e Element) Element {
       processed := l.functor(e)
       if processed == nil {
         return nil
