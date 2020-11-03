@@ -25,7 +25,7 @@ var EmptyProcessor Processor = func(e Any) Any {return e}
 
 type List struct {
   Head Any
-  Tail * List
+  Tail *List
 }
 
 var Nil List = List { nil, nil }
