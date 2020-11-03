@@ -162,6 +162,18 @@ func (l List) Exist(p Predicate) bool {
   return e
 }
 
+//TODO optimize: get rid of head recursion
+func (l List) Reduce(f func(el Any, er Any) Any) Any {
+  if l.IsEmpty() {
+    panic("Usupport operation: reduce left on empty list")
+  } else if l.tail.IsEmpty() {
+    return l.head
+  } else {
+    return f(l.head, l.tail.Reduce(f))
+  }
+}
+
+
 /**
  * = O(n)
  */

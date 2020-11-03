@@ -27,6 +27,14 @@ func Mul100(e Any) Any {
   return e.(int) * 100
 }
 
+func Sum(a Any, b Any) Any {
+  return a.(int) + b.(int)
+}
+
+func StrConcat(a Any, b Any) Any {
+  return a.(string) + b.(string)
+}
+
 func main() {
   fmt.Println("Hello")
 
@@ -45,7 +53,7 @@ func main() {
 //  l.Filter(Odd).Foreach(Log)
 
   fmt.Println("--")
-  l1 := Nil.Cons(6).Cons(5).Cons(4).Cons(-3).Cons(2).Cons(1).Cons(0)
+  l1 := Nil.Cons(6).Cons(5).Cons(4).Cons(3).Cons(2).Cons(1).Cons(0)
   l2 := Nil.Cons("f").Cons("e").Cons("d").Cons("c")
   l3 := Nil.Cons("fff").Cons("eee").Cons("ddd").Cons("ccc").Cons("bbb").Cons("aaa")
   l1.Foreach(Log)
@@ -61,4 +69,7 @@ func main() {
   fmt.Println("5 exist", l1.Exist(func(e Any) bool {return e.(int) == 5}))
   fmt.Println("100 exist", l1.Exist(func(e Any) bool {return e.(int) == 100}))
   fmt.Println("even esist", l1.Exist(Even))
+  fmt.Println("--- reduce ---")
+  fmt.Println(l1.Reduce(Sum))
+  fmt.Println(l2.Reduce(StrConcat))
 }
