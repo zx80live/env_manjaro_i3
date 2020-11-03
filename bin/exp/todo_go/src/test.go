@@ -53,4 +53,6 @@ func main() {
   l1.Zip(l2).Foreach(Log)
   fmt.Println("--")
   l1.Zip(l2).Zip(l3).Foreach(Log)
+  fmt.Println("--")
+  l2.ZipWithIndex().Foreach(Log)
 }
