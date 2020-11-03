@@ -72,6 +72,7 @@ func main() {
   fmt.Println("--- reduce ---")
   fmt.Println(l1.Reduce(Sum))
   fmt.Println(l2.Reduce(StrConcat))
+  fmt.Println("reduce sinle element", Nil.Cons(10).Reduce(Sum))
   fmt.Println("--- fold left ---")
   res1 := l1.FoldLeft(1000, func(acc Any, e Any) Any {
     return acc.(int) + e.(int)
@@ -87,14 +88,19 @@ func main() {
 
   fmt.Println("-- mkstring ---")
   fmt.Println(l1.MkString("~~", "|", "~~"))
+  fmt.Println(Nil.MkString("~~", "|", "~~"))
+  fmt.Println(Nil.Cons(1).MkString("~~", "|", "~~"))
   fmt.Println("-- to string ---")
   fmt.Println(l1.ToString())
 
   fmt.Println("-- group by ---")
   groups := Nil.
-    ConsArr([]Any{10,10,20,30,10,30,40,50,10}).GroupBy(func(e Any) Any { return e })
+    //ConsArr([]Any{"a", "b", "c", "a", "a", "e", "f", "b", "f", "g", "h"}).
+    ConsArr([]Any{100, 200, 300, 100, 400,500,200, 500, 700}).
+    GroupBy(func(e Any) Any { return e })
 
   for key, element := range groups {
-    fmt.Println("key=", key, "values=", element)
+    fmt.Println("key=", key, "values=", element.ToString())
   }
+
 }

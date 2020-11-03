@@ -109,6 +109,7 @@ func (l List) GroupBy(f func(Element) Any) map[Any]List {
 
   l.Foreach(func(e Any) {
     key := f(e)
+    fmt.Println("_key=", key)
     var group List
 
     if value, found := m[key]; found {
@@ -116,7 +117,6 @@ func (l List) GroupBy(f func(Element) Any) map[Any]List {
     } else {
       group = Nil
     }
-    
     group = group.Cons(e)
     m[key] = group
   })
@@ -252,9 +252,16 @@ func (l List) ToArray() []Any {
 }
 
 func (l List) MkString(left string, delimiter string, right string) string {
-  body := l.Reduce(func(a Any, b Any) Any {
-    return fmt.Sprintf("%v%s%v", a, delimiter, b)
-  })
+  var body Any
+  if l.IsEmpty() {
+    body = ""
+  } else if l.tail.IsEmpty() {
+    body = fmt.Sprintf("%v", l.head)
+  } else {
+    body = l.Reduce(func(a Any, b Any) Any {
+      return fmt.Sprintf("%v%s%v", a, delimiter, b)
+    })
+  }
 
   return fmt.Sprintf("%s%s%s", left, body, right)
 }
