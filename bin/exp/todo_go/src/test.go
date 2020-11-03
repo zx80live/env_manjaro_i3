@@ -23,6 +23,32 @@ var EmptyPredicate Predicate = func(e Any) bool { return true }
 var EmptyFunctor Functor = func(e Any) Any { return e }
 var EmptyProcessor Processor = func(e Any) Any {return e}
 
+type List struct {
+  Head Any
+  Tail * List
+}
+
+var Nil List = List { nil, nil }
+
+func (l List) Add(e Any) List {
+  xs := List {
+    Head: e,
+    Tail: &l,
+  }
+
+  return xs
+}
+
+func (l List) Println() {
+  if l.Head != nil {
+    fmt.Println(l.Head)
+  }
+
+  if l.Tail != nil {
+    l.Tail.Println()
+  }
+}
+
 func (p1 Predicate) Filter(p2 Predicate) Predicate {
   res := func(e Any) bool {
     return p1(e) && p2(e)
@@ -174,5 +200,8 @@ func main(){
     ZipWithIndex().
     Foreach(logger)
     //ToChannel()
+
+    xs := List { 1, &List{2, &List {3, &Nil}} }
+    xs.Println()
 
 }
