@@ -124,6 +124,21 @@ func (l List) GroupBy(f func(Element) Any) map[Any]List {
   return m
 }
 
+func (l List) Find(p Predicate) Element { //TODO implement Option[Element]
+  it := &l
+  for {
+    if it.IsEmpty() {
+      return nil
+    } else {
+      if p(it.head) {
+        return it.head
+      } else {
+        it = it.tail
+      }
+    }
+  }
+}
+
 func (l List) Reverse() List {
   xs := Nil
   l.Foreach(func(e Element) {

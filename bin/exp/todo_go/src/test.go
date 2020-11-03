@@ -103,4 +103,8 @@ func main() {
     fmt.Println("key=", key, "values=", element.ToString())
   }
 
+  fmt.Println("-- find -----")
+  fmt.Println(l1.Find(func(e Any) bool { return e.(int) == 3 }))
+  fmt.Println(l1.Find(func(e Any) bool { return e.(int) == 100 }))
+
 }
