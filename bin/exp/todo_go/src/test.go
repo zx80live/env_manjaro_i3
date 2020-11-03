@@ -79,8 +79,10 @@ func main() {
   fmt.Println(res1)
   fmt.Println("--- to array ---")
   var arr []Any = l1.ToArray()
-  for e := range arr {
-    fmt.Println("> ", e)
+  for i, e := range arr {
+    fmt.Println("> ", i, e)
   }
+  fmt.Println("-- cons arr ---")
+  Nil.ConsArr([]Any{10,20,30,40,50}).Foreach(Log)
 
 }

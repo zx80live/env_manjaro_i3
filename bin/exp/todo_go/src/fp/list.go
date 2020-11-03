@@ -60,6 +60,14 @@ func (l List) Cons(e Element) List {
   return xs
 }
 
+func (l List) ConsArr(arr []Element) List {
+  res := l
+  for _, e := range arr {
+    res = res.Cons(e)
+  }
+  return res
+}
+
 /**
  * Add lazy filter
  */
