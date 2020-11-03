@@ -107,21 +107,20 @@ func (l1 List) Zip(l2 List) List {
   return zipped.Reverse()
 }
 
-func (l List) ZipWithIndex List {
+func (l List) ZipWithIndex() List {
   zipped := Nil
   i := 0
   it := &l
 
   for {
     if (it.head != nil) {
-      zipped = zipped.Cons(Tuple2 { i, it.head })
+      zipped = zipped.Cons(Tuple2 { it.head, i})
       it = it.tail
       i = i + 1
     } else {
       break
     }
   }
-
 
   return zipped.Reverse()
 }
