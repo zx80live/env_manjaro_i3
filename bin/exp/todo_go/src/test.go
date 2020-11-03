@@ -39,13 +39,13 @@ func (l List) Add(e Any) List {
   return xs
 }
 
-func (l List) Println() {
+func (l List) Foreach(f func(Any)) {
   if l.Head != nil {
-    fmt.Println(l.Head)
+    f(l.Head)
   }
 
   if l.Tail != nil {
-    l.Tail.Println()
+    l.Tail.Foreach(f)
   }
 }
 
@@ -202,6 +202,6 @@ func main(){
     //ToChannel()
 
     xs := List { 1, &List{2, &List {3, &Nil}} }
-    xs.Println()
+    xs.Foreach(logger)
 
 }
