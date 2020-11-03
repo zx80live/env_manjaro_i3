@@ -1,5 +1,7 @@
 package fp
 
+import "fmt"
+
 type Element = Any
 type Accumulator = Any
 
@@ -100,6 +102,26 @@ func (l List) Map(f Functor) List {
       }
     },
   }
+}
+
+func (l List) GroupBy(f func(Element) Any) map[Any]List {
+  m := make(map[Any]List)
+
+  l.Foreach(func(e Any) {
+    key := f(e)
+    var group List
+
+    if value, found := m[key]; found {
+      group = value
+    } else {
+      group = Nil
+    }
+    
+    group = group.Cons(e)
+    m[key] = group
+  })
+
+  return m
 }
 
 func (l List) Reverse() List {
@@ -229,6 +251,17 @@ func (l List) ToArray() []Any {
   return arr
 }
 
+func (l List) MkString(left string, delimiter string, right string) string {
+  body := l.Reduce(func(a Any, b Any) Any {
+    return fmt.Sprintf("%v%s%v", a, delimiter, b)
+  })
+
+  return fmt.Sprintf("%s%s%s", left, body, right)
+}
+
+func (l List) ToString() string {
+  return l.MkString("[", ",", "]")
+}
 
 //-- internal --------------------------------------------------------------------
 

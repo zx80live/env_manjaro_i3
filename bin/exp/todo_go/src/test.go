@@ -85,4 +85,16 @@ func main() {
   fmt.Println("-- cons arr ---")
   Nil.ConsArr([]Any{10,20,30,40,50}).Foreach(Log)
 
+  fmt.Println("-- mkstring ---")
+  fmt.Println(l1.MkString("~~", "|", "~~"))
+  fmt.Println("-- to string ---")
+  fmt.Println(l1.ToString())
+
+  fmt.Println("-- group by ---")
+  groups := Nil.
+    ConsArr([]Any{10,10,20,30,10,30,40,50,10}).GroupBy(func(e Any) Any { return e })
+
+  for key, element := range groups {
+    fmt.Println("key=", key, "values=", element)
+  }
 }
