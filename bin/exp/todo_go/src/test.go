@@ -45,7 +45,7 @@ func main() {
 //  l.Filter(Odd).Foreach(Log)
 
   fmt.Println("--")
-  l1 := Nil.Cons(5).Cons(4).Cons(3).Cons(2).Cons(1).Cons(0)
+  l1 := Nil.Cons(6).Cons(5).Cons(4).Cons(-3).Cons(2).Cons(1).Cons(0)
   l2 := Nil.Cons("f").Cons("e").Cons("d").Cons("c")
   l3 := Nil.Cons("fff").Cons("eee").Cons("ddd").Cons("ccc").Cons("bbb").Cons("aaa")
   l1.Foreach(Log)
@@ -55,4 +55,7 @@ func main() {
   l1.Zip(l2).Zip(l3).Foreach(Log)
   fmt.Println("--")
   l2.ZipWithIndex().Foreach(Log)
+  fmt.Println("--")
+  fmt.Println("even", l1.Count(Even), "odd", l1.Count(Odd), "neg", l1.Count(Neg), "pos", l1.Count(Pos))
+  fmt.Println("size", l1.Size(), "Nil.size=", Nil.Size(), "tail.size=",  l1.Tail().Size())
 }

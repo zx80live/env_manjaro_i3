@@ -8,6 +8,14 @@ type List struct {
 
 var Nil List = List { nil, nil, EmptyFunctor }
 
+func (l List) Head() Any {
+  return l.head
+}
+
+func (l List) Tail() List {
+  return l.tail.Copy()
+}
+
 func (l List) IsEmpty() bool {
   return l.head == nil && l.tail == nil
 }
@@ -123,6 +131,23 @@ func (l List) ZipWithIndex() List {
   }
 
   return zipped.Reverse()
+}
+
+func (l List) Count(p Predicate) int {
+  c := 0
+  l.Foreach(func(e Any) {
+    if p(e) {
+      c = c + 1
+    }
+  })
+  return c
+}
+
+/**
+ * = O(n)
+ */
+func (l List) Size() int {
+  return l.Count(func(e Any) bool {return true})
 }
 
 /**
