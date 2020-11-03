@@ -58,4 +58,7 @@ func main() {
   fmt.Println("--")
   fmt.Println("even", l1.Count(Even), "odd", l1.Count(Odd), "neg", l1.Count(Neg), "pos", l1.Count(Pos))
   fmt.Println("size", l1.Size(), "Nil.size=", Nil.Size(), "tail.size=",  l1.Tail().Size())
+  fmt.Println("5 exist", l1.Exist(func(e Any) bool {return e.(int) == 5}))
+  fmt.Println("100 exist", l1.Exist(func(e Any) bool {return e.(int) == 100}))
+  fmt.Println("even esist", l1.Exist(Even))
 }

@@ -143,6 +143,25 @@ func (l List) Count(p Predicate) int {
   return c
 }
 
+func (l List) Exist(p Predicate) bool {
+  e := false
+  it := &l
+  for {
+    if it.head != nil {
+      if p(it.head) {
+        e = true
+        break
+      } else {
+        it = it.tail
+      }
+    } else {
+      break
+    }
+  }
+
+  return e
+}
+
 /**
  * = O(n)
  */
