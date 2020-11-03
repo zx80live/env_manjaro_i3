@@ -212,6 +212,15 @@ func (l List) Foreach(f func(Element)) {
   }
 }
 
+func (l List) ToArray() []Any {
+  arr := []Any{}
+  l.Foreach(func (e Element) {
+    arr = append(arr, e)
+  })
+
+  return arr
+}
+
 
 //-- internal --------------------------------------------------------------------
 

@@ -77,4 +77,10 @@ func main() {
     return acc.(int) + e.(int)
   })
   fmt.Println(res1)
+  fmt.Println("--- to array ---")
+  var arr []Any = l1.ToArray()
+  for e := range arr {
+    fmt.Println("> ", e)
+  }
+
 }
