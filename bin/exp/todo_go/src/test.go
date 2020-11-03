@@ -30,12 +30,20 @@ type List struct {
 
 var Nil List = List { nil, nil }
 
-func (l List) Add(e Any) List {
+func (l List) Cons(e Any) List {
   xs := List {
     Head: e,
     Tail: &l,
   }
 
+  return xs
+}
+
+func (l List) Reverse() List {
+  xs := Nil
+  l.Foreach(func(e Any) {
+    xs = xs.Cons(e)
+  })
   return xs
 }
 
@@ -201,7 +209,7 @@ func main(){
     Foreach(logger)
     //ToChannel()
 
-    xs := List { 1, &List{2, &List {3, &Nil}} }
-    xs.Add(4).Add(5).Foreach(logger)
+    xs := Nil.Cons(5).Cons(4).Cons(3).Cons(2).Cons(1).Cons(0)
+    xs.Foreach(logger)
 
 }
