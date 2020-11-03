@@ -202,6 +202,6 @@ func main(){
     //ToChannel()
 
     xs := List { 1, &List{2, &List {3, &Nil}} }
-    xs.Foreach(logger)
+    xs.Add(4).Add(5).Foreach(logger)
 
 }
