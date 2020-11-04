@@ -71,13 +71,18 @@ function _make_line(){
   local body=$3
   local format=$4
  
-  if [[ $level = $NONE ]]; then
-    level=""
+
+  if [[ -n $format ]] && [ $format = "console" ]; then
+    if [[ $level = $NONE ]]; then
+      level=""
+    else
+      level=$(strformat $level DARK_GREY)
+    fi
   fi
 
   if [[ $state = $cb_on ]]; then
     if [[ -n $format ]] && [ $format = "console" ]; then
-      body=$(strformat $body STRIKE)
+      body=$(strformat $body STRIKE DARK_GREY)
     else
       body="~~$body~~"
     fi
@@ -117,10 +122,10 @@ function _extract_fields(){
 
   local parsed_level=${arr[2]}
   local parsed_state=${arr[3]}
-  local parsed_body=$(strunwrap ${arr[4]} '\~' '\~')
+  local parsed_body=$(strunwrap ${arr[4]} '~~' '~~')
   local parsed_group=${arr[5]}
   local parsed_id=${arr[6]}
-  local parsed_text=$(strunwrap ${arr[7]} '\~' '\~')
+  local parsed_text=$(strunwrap ${arr[7]} '~~' '~~')
   local fields=(
           $parsed_level
           $parsed_state
