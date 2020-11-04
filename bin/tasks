@@ -29,6 +29,7 @@ regex_left_brace='`'
 regex_right_brace='`'
 regex_group_delimiter='\|'
 regex_identity="[-_a-zA-Z0-9]+"
+regex_line="($regex_level)\s*($regex_state)\s*(\~*$regex_left_brace($regex_identity)\|($regex_identity)$regex_right_brace(.*))"
 
 IDX_LEVEL=1
 IDX_STATE=2
@@ -107,9 +108,7 @@ function _to_closed(){
 ##-- extractors -------------------------------------------------------------------------------------------------
 function _extract_fields(){
   local line=$1
-  local regex_line="($regex_level)\s*($regex_state)\s*(\~*$regex_left_brace($regex_identity)\|($regex_identity)$regex_right_brace(.*))"
-
-  local arr=("${(@f)$(strregex $1 $regex_line; echo .)}"); unset 'arr[-1]'
+  local arr=("${(@f)$(strregex $line $regex_line; echo .)}"); unset 'arr[-1]'
 
   # if level does not exist
   if [[ ${#arr[@]} = 7 ]]; then
