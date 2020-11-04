@@ -230,6 +230,8 @@ function todo_find(){
   grep -E $regex $file
 }
 
+# TODO handle case: id not found
+# TODO handle case: file not found
 function todo_find_parents(){
   local file=$1
   local id=$2
@@ -249,6 +251,12 @@ function todo_find_parents(){
 #  - [open]  -> [[node.open, parents.open], subtree.open] [force]
 #  - [close] -> [node.checked.close]
 #  - [close] -> [node.close, subtree.close] [force]
+#TODO handle: file not found
+#TODO handle: flags -i, -s, -f are not present
+#TODO handle: id not found
+#TODO handle: id is present but -s is not present
+#TODO handle: id is present but -s is not supported
+#TODO optimize: -f forced update for big trees
 function todo_set_state(){
   local file
   local id
@@ -340,6 +348,7 @@ function todo_set_state(){
 #  - opened roots with opened/closed childs         -open  -subtree -all
 #  - closed roots without childs                    -close 
 #  - closed roots with closed childs                -close -subtree
+#TODO optimize: all modes
 function todo_list(){
   local file
   local open
@@ -437,6 +446,9 @@ function todo_list(){
   done
 }
 
+#TODO fix: file not found -> create file with name=entered arg
+#TODO fix: should add to new line (instead of current end)
+#TODO fix: wrong adding if group is present
 function todo_add(){
   local file
   local group
