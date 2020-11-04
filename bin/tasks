@@ -438,11 +438,14 @@ function todo_list(){
   local nodes=("${(@f)$(grep -E $regex $file; echo .)}"); unset 'nodes[-1]'
 
   for n in $nodes; do
-    local node_level=$(_extract_level $n)
-    local node_state=$(_extract_state $n)
-    local node_body=$(_extract_body $n)
+    local node_fields=("${(@f)$(_extract_fields $n; echo .)}"); unset 'arr[-1]'
+
+    local node_level=$node_fields[$IDX_LEVEL]
+    local node_state=$node_fields[$IDX_STATE]
+    local node_body=$node_fields[$IDX_BODY]
 
     _make_line $node_level $node_state $node_body $format
+    #echo $n
   done
 }
 
