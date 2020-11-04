@@ -444,7 +444,6 @@ function todo_list(){
     local node_body=$node_fields[$IDX_BODY]
 
     _make_line $node_level $node_state $node_body $format
-    #echo $n
   done
 }
 

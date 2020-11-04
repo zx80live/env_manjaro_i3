@@ -217,20 +217,20 @@ function strunwrap(){
   local str=$1
   local left=$2
   local right=$3
+  local left_len=${#left}
+  local str_len=${#str}
+  local right_len=${#right}
 
-  local regex_left="^${left}*(.*)$"
-  local regex_right="^${right}*(.*)$"
+  if [[ $str == $left* ]]; then
+    str=${str:${left_len}:${str_len}}
+  fi
 
-  local fields1=("${(@f)$(strregex $str $regex_left; echo .)}")
-  unset 'fields[-1]'
+  if [[ $str == *$right ]]; then
+    local to=$(($str_len - $right_len - $left_len))
+    str=${str:0:$to}
+  fi
 
-  local res1=${fields1[2]}
-  local str2=$(echo $res1 | rev)
-
-  local fields2=("${(@f)$(strregex $str2 $regex_right; echo .)}")
-  unset 'fields[-1]'
-
-  echo ${fields2[2]} | rev
+  echo $str
 }
 
 function strtake_left(){
