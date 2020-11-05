@@ -431,7 +431,8 @@ function todo_set_state(){
 #  - opened roots with opened/closed childs         -open  -subtree -all
 #  - closed roots without childs                    -close 
 #  - closed roots with closed childs                -close -subtree
-#TODO optimize: all modes
+#TODO filter by group
+#TODO colorize by groups
 function todo_list(){
   local file
   local open
