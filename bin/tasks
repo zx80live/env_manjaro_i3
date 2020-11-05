@@ -56,6 +56,82 @@ function _to_state(){
   esac
 }
 
+function _make_node(){
+  # args
+  local level=$1
+  local state=$2
+  local group=$3
+  local id=$4
+  local text=$5
+  local format=$6
+
+
+
+  local result
+  if [[ -n $format ]] && [ $format = "console" ]; then
+    ##-- console formatter --------------
+    if [[ -z $level ]] || [[ $level = $NONE ]]; then
+      level=''
+    else
+      level=$(strformat $level DARK_GREY)
+    fi
+
+    FMT_STATE=('')
+    FMT_GROUP=('BLUE')
+    FMT_ID=('BLUE')
+    FMT_TEXT=('MAGENTA')
+
+    FMT_STATE_ON=('DARK_GREY')
+    FMT_GROUP_ON=('DARK_GREY' 'STRIKE')
+    FMT_ID_ON=('DARK_GREY' 'STRIKE')
+    FMT_TEXT_ON=('STRIKE' 'DARK_GREY')
+
+    local body
+    local delim='|'
+    local space=''
+    local fmt_state
+    local fmt_group
+    local fmt_id
+    local fmt_text
+    if [[ $state = $cb_on ]]; then
+      fmt_state=($FMT_STATE_ON)
+      fmt_group=($FMT_GROUP_ON)
+      fmt_id=($FMT_ID_ON)
+      fmt_text=($FMT_TEXT_ON)
+    else
+      fmt_state=($FMT_STATE)
+      fmt_group=($FMT_GROUP)
+      fmt_id=($FMT_ID)
+      fmt_text=($FMT_TEXT)
+    fi
+
+    state=$(strformat $state $fmt_state)
+    group=$(strformat $group $fmt_group)
+    delim=$(strformat $delim $fmt_group)
+    id=$(strformat $id $fmt_id)
+    text=$(strformat $text $fmt_text)
+
+    body=$group$delim$id$space$text
+
+    result=$level' '$state' '$body
+
+
+  else
+    ##-- raw formatter ------------------
+    if [[ -z $level ]] || [[ $level = $NONE ]]; then
+      level=''
+    fi
+    local body=$left_brace$group$group_delimiter$id$right_brace' '$text
+    if [[ $state = $cb_on ]]; then
+      body='~~'$body'~~'
+    fi
+    result=$level' '$state' '$body
+  fi
+
+  echo $result
+}
+
+#@deprecated()
 function _make_body(){
   local group=$1
   local id=$2
@@ -65,6 +141,7 @@ function _make_body(){
   echo $body
 }
 
+#@deprecated()
 function _make_line(){
   local level=$1
   local state=$2
@@ -446,9 +523,11 @@ function todo_list(){
 
     local node_level=$node_fields[$IDX_LEVEL]
     local node_state=$node_fields[$IDX_STATE]
-    local node_body=$node_fields[$IDX_BODY]
+    local node_group=$node_fields[$IDX_GROUP]
+    local node_id=$node_fields[$IDX_ID]
+    local node_text=$node_fields[$IDX_TEXT]
 
-    _make_line $node_level $node_state $node_body $format
+    _make_node $node_level $node_state $node_group $node_id $node_text $format
   done
 }
 
