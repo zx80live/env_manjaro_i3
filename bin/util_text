@@ -222,11 +222,11 @@ function strunwrap(){
   local right_len=${#right}
 
   if [[ $str == $left* ]]; then
-    str=${str:${left_len}:${str_len}}
+    str=${str:${left_len}:${#str}}
   fi
 
   if [[ $str == *$right ]]; then
-    local to=$(($str_len - $right_len - $left_len))
+    local to=$((${#str} - $right_len))
     str=${str:0:$to}
   fi
 
