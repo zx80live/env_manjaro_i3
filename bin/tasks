@@ -76,6 +76,8 @@ function _make_node(){
       level=$(strformat $level DARK_GREY)
     fi
 
+    id=$(_extract_tail_id $id)
+
     FMT_STATE=('')
     FMT_GROUP=('BLUE')
     FMT_ID=('BLUE')
