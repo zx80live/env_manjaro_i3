@@ -273,7 +273,9 @@ Brother DCP -L2560DWR
 
 `sudo pacman -S ncdu`
 
+##### bpytop
 
+https://github.com/aristocratos/bpytop
 
 ##### zsh
 
