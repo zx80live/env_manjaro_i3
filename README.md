@@ -269,6 +269,15 @@ Brother DCP -L2560DWR
 
 #### Tools: productivity
 
+##### cheat.sh
+
+```bash
+$ curl cheat.sh
+$ curl cheat.sh/ls
+```
+
+
+
 ##### ncdu
 
 `sudo pacman -S ncdu`
