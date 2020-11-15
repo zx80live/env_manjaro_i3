@@ -286,7 +286,9 @@ mode "$mode_system" {
     bindsym Escape mode "default"
 }
 
-
+# disable thinkpad p53 keys
+bindcode 112 exec echo >> /dev/null # pgUp beside arrows
+bindcode 117 exec echo >> /dev/null # pgDn beside arrows
 
 
 #-- [Keys.system.workspaces] -------------------------------------------------------------------
