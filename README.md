@@ -412,6 +412,30 @@ ctrl+V  // select text
 "+y     // copy to system clipboard
 ```
 
+`ctrl+a`/`ctrl+x` - increase/decrease number under cursor
+
+```
+// enter the following strings
+0
+0
+0
+
+ctrl+v   // select column
+
+ctrl+a   // all numbers in the selected column will be increased as following:
+1
+1
+1
+
+g ctrl+a // all numbers in the selected column will be increased as following:
+
+1
+2
+3
+```
+
+ 
+
 
 
 ##### Desktop notification
