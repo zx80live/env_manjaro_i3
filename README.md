@@ -442,6 +442,13 @@ zf      // fold selected
 zo      // unfold selected (alternative: set cursor to the folded line and press <space>)
 ```
 
+Folding paragraph:
+
+```
+ctrl+(      // go to start paragraph or set cursor to the start paragraph
+zf ctrl+)
+```
+
  
 
 
