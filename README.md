@@ -439,7 +439,7 @@ Folding selected lines:
 ```
 ctrl+V  // select lines
 zf      // fold selected
-zo      // unfold selected
+zo      // unfold selected (alternative: set cursor to the folded line and press <space>)
 ```
 
  
