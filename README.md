@@ -434,6 +434,14 @@ g ctrl+a // all numbers in the selected column will be increased as following:
 3
 ```
 
+Folding selected lines:
+
+```
+ctrl+V  // select lines
+zf      // fold selected
+zo      // unfold selected
+```
+
  
 
 
