@@ -23,6 +23,16 @@ colorscheme darcula
 let g:airline_powerline_fonts = 1
 set t_Co=256
 
+"  1 -> blinking block
+"  2 -> solid block
+"  3 -> blinking underscore
+"  4 -> solid underscore
+"  5 -> blinking vertical bar
+"  6 -> solid vertical bar
+let &t_SI = "\<Esc>[6 q" "insert mode
+let &t_SR = "\<Esc>[3 q" "replace mode
+let &t_EI = "\<Esc>[2 q" "normal mode
+
 
 " [search]
 set ignorecase
