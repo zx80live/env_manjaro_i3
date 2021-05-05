@@ -761,6 +761,12 @@ $ rsync -r /dir1/ /dir2/
 
 #### How-to
 
+###### Set screen resolution
+```bash
+xrandr
+xrandr -s 1920x1080
+```
+
 ###### Vim keys
 Copy entire word under cursor
 ```
