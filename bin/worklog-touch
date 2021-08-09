@@ -1,0 +1,18 @@
+#!/usr/bin/env zsh
+
+source util_files
+source util_logs
+
+ROOT=~/Documents/worklogs
+CURRENT_DATE=$(date '+%Y-%m-%d')
+CURRENT_FILE='worklog-'$CURRENT_DATE
+CURRENT_PATH=$ROOT/$CURRENT_FILE
+
+touch_dir $ROOT
+touch_file $CURRENT_PATH
+if ! [[ -s $CURRENT_PATH ]]
+then
+  echo '['$CURRENT_DATE']' >> $CURRENT_PATH
+  echo '------------\n' >> $CURRENT_PATH
+fi  
+

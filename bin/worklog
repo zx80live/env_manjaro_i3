@@ -1,0 +1,6 @@
+#!/usr/bin/env zsh
+
+source worklog-touch
+
+exec alacritty -t $CURRENT_FILE -e vim $CURRENT_PATH 
+
