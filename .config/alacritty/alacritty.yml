@@ -13,7 +13,7 @@ env:
   #TERM: alacritty
   TERM: xterm-256color 
 
-#window:
+window:
   # Window dimensions (changes require restart)
   #
   # Specified in number of columns/lines, not pixels.
@@ -62,6 +62,7 @@ env:
   # Values for `startup_mode` (macOS only):
   #   - SimpleFullscreen
   #startup_mode: Windowed
+  startup_mode: Maximized
 
   # Window title
   #title: Alacritty
