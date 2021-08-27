@@ -65,7 +65,7 @@ window:
   startup_mode: Maximized
 
   # Window title
-  #title: Alacritty
+  title: shell
 
   # Window class (Linux/BSD only):
   #class:
