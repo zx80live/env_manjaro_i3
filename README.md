@@ -450,7 +450,10 @@ zf ctrl+)
 ```
 
  
-
+##### Ranger
+- ranger filemanager: https://github.com/ranger/ranger
+- plugins:
+  * https://github.com/alexanderjeurissen/ranger_devicons
 
 
 ##### Desktop notification
