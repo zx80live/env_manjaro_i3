@@ -453,7 +453,15 @@ zf ctrl+)
 ##### Ranger
 - ranger filemanager: https://github.com/ranger/ranger
 - plugins:
-  * https://github.com/alexanderjeurissen/ranger_devicons
+  * devicons: https://github.com/alexanderjeurissen/ranger_devicons
+  * image preview:
+      ```bash
+      pip3 install  ueberzug
+
+      # add to ~/.config/ranger/rc.conf
+      set preview_images true
+      set preview_images_method  ueberzug
+      ```
 
 
 ##### Desktop notification
