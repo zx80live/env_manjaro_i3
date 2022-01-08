@@ -452,6 +452,10 @@ zf ctrl+)
  
 ##### Ranger
 - ranger filemanager: https://github.com/ranger/ranger
+- config:
+   ```
+   set draw_borders both
+   ```
 - plugins:
   * devicons: https://github.com/alexanderjeurissen/ranger_devicons
   * image preview:
