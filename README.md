@@ -469,9 +469,7 @@ zf ctrl+)
 
 ##### Nerd fonts
  - explore nerd fonts https://www.nerdfonts.com/
- - download nerd fonts https://www.nerdfonts.com/font-downloads
- - install nerd fonts https://gist.github.com/matthewjberger/7dd7e079f282f8138a9dc3b045ebefa0
- 
+
  
 
 ##### Desktop notification
