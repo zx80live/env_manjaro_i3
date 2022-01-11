@@ -343,6 +343,10 @@ $ p10k configure
 ```bash
 vim ~/.p10k.zsh 
 
+...
+# disable os icon
+# os_icon               # os identifier
+ 
 ... 
 # change prompt cursor
 typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='﬌' #'❯'
