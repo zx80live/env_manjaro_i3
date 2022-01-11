@@ -340,6 +340,19 @@ $ echo 'source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme' >>! ~
 $ p10k configure
 ```
 
+```bash
+vim ~/.p10k.zsh 
+
+... 
+# change prompt cursor
+typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='﬌' #'❯'
+ 
+...
+# set max branch name length 255 
+  (( $#branch > 255 )) && branch[13,-13]="…"  # <-- this line
+ 
+```
+
 
 
 ##### Terminal
